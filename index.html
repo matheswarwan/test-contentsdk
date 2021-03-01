@@ -1,0 +1,33 @@
+<html>
+  <head></head>
+  <body>
+    <script src="blocksdk.js"></script>
+    <script>
+      var sdk = new window.sfdc.BlockSDK();
+      var textareacontent = '';
+      // do something with the sdk
+      function textareachange() {
+        alert('ok');
+        textareacontent = document.getElementById('textarea-0').value;
+        console.log('textareacontent --> ' + textareacontent);
+        sdk.setData( {
+          textarea:textareacontent
+        }
+        );
+        sdk.getData( 
+          function(data) 
+          {
+            console.log('Get User Data '); //+ data.textarea ); //+ ' textareacontent ' + textareacontent);
+            document.getElementById('div-0').value = "Some value";
+          }
+
+        );
+      }
+      console.log('SDK object --> ' + sdk);
+    </script>
+    <div id='textarea'>
+    <textarea id='textarea-0' onchange="textareachange()">default</textarea>  
+    <div id='div-0'>div</div>
+    </div>
+  </body>
+</html>
