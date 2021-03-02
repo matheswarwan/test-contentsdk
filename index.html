@@ -7,40 +7,45 @@
       var textareacontent = '';
       // do something with the sdk
 
+      //functions
+      function textAreaChange() {
+        textAreaContent = document.getElementById('textarea-0').value;
+        //setting super content (for preview)
+        sdk.setSuperContent(textAreaContent);
+        sdk.setContent({inputText: textAreaContent});//Callback not used
+        sdk.setData({inputText: textAreaContent});
+
+        console.log('textareacontent --> ' + textAreaContent);
+
+        sdk.getData( 
+          function(data) 
+          {
+            console.log('[debug]: Get Data method' + JSON.stringify(data)); //+ data.textarea ); //+ ' textareacontent ' + textareacontent);
+          }
+        );
+
+      //get default value if available
+      //TODO: 
       var textAreaElement = document.getElementById('textarea-0');
       if (textAreaElement) { 
         textAreaElement.addEventListener("input", 
         function () {
           console.log('typing..')
           //debounce(paintMap, 500)();
-          textareachange();
+          textAreaChange();
       });
-
       }
-      function textareachange() {
-        textareacontent = document.getElementById('textarea-0').value;
-        console.log('textareacontent --> ' + textareacontent);
-        sdk.setData( {
-          textarea:textareacontent
-        }
-        );
-        sdk.getData( 
-          function(data) 
-          {
-            console.log('Get User Data '); //+ data.textarea ); //+ ' textareacontent ' + textareacontent);
-          }
-        );
+      
       //Setting DIV tag  
-      document.getElementById('div-0').innerHTML = textareacontent;
+      document.getElementById('div-0').innerHTML = textAreaContent;
 
-      //setting super content (for preview)
-      sdk.setSuperContent(textareacontent);
+      
 
       }
       console.log('SDK object --> ' + sdk);
     </script>
     <div id='textarea'>
-    <textarea id='textarea-0' onchange="textareachange()">default</textarea>  
+    <textarea id='textarea-0' onchange="textAreaChange()">default</textarea>  
     <div id='div-0'>div</div>
     </div>
   </body>
