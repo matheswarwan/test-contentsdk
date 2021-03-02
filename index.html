@@ -64,8 +64,9 @@
 
       sdk.getData(function (data) {
         textAreaContent = data.inputText || 'textAreaContent is empty/ not saved';
-        sdk.setSuperContent(textAreaContent);
-        document.getElementById('textarea-0').value = textAreaContent;
+        //sdk.setSuperContent(textAreaContent);
+        document.getElementById('textarea-0').value = textAreaContent + "is this available";
+        document.getElementById('div-0').innerHTML = textAreaContent + "is this available";
         console.log('Inside getData ' + JSON.stringify(data));
       });
       }
