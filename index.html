@@ -22,15 +22,29 @@
         };
       }
       */
-      function textAreaChange() {
-        textAreaContent = document.getElementById('textarea-0').value;
 
-        sdk.getData( 
+      /* sdk.getData( 
           function(textAreaContent) 
           {
             console.log('[debug]: Get Data method' + JSON.stringify(textAreaContent)); //This is not setting any data.
+            //setting default values
+            document.getElementById('textarea-0').value = textAreaContent + " - set value";
+            textAreaChange();
           }
-        );  
+      );  
+      sdk.getContent( 
+          function(textAreaContent) 
+          {
+            console.log('[debug]: Get Data method' + JSON.stringify(textAreaContent)); //This is not setting any data.
+            //setting default values
+            document.getElementById('textarea-0').value = textAreaContent + " - set value";
+            textAreaChange();
+          }
+      );  */
+      function textAreaChange() {
+        textAreaContent = document.getElementById('textarea-0').value;
+
+        
 
         console.log('Text Area Change function called.')
         //setting super content (for preview)
