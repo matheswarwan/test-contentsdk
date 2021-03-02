@@ -3,7 +3,14 @@
   <body>
     <script src="blocksdk.js"></script>
     <script>
-      var sdk = new window.sfdc.BlockSDK();
+      var sdk = new window.sfdc.BlockSDK({
+           blockEditorWidth: 600,
+           tabs: [
+               'htmlblock', 
+               'stylingblock' 
+           ]
+      }
+      );
       var textAreaContent ;
       // do something with the sdk
       //functions
@@ -48,16 +55,17 @@
 
         console.log('Text Area Change function called.')
         //setting super content (for preview)
-        sdk.setSuperContent({inputText: textAreaContent} );
+        sdk.setSuperContent(textAreaContent);
         sdk.setContent(textAreaContent);//plain content. not json.
         sdk.setData({inputText: textAreaContent});
 
         console.log('Updated Text is --> ' + textAreaContent);
 
         
-      //Setting DIV tag  
+      //Setting DIV tag & cache
       document.getElementById('div-0').innerHTML = textAreaContent;
       document.getElementById('textarea-0').value =textAreaContent;
+      localStorage.setItem('textarea-0-cache', textAreaContent);
       //printing sdk object
       console.log('SDK object --> ' + JSON.stringify(sdk));
 
