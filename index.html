@@ -1,6 +1,12 @@
 <html>
   <head></head>
   <body>
+  <div id='textarea'>
+    <textarea id='textarea-0' placeholder='1.2 type here..' onchange="textAreaEventListner()"></textarea>  <!-- onchange="textAreaChange()"--> 
+    <!-- <input type="text" id="textarea-0"></input> -->
+    <div id='div-0'></div>
+    </div>
+  
     <script src="blocksdk.js"></script>
     <script>
       var sdk = new window.sfdc.BlockSDK({
@@ -11,6 +17,11 @@
            ]
       }
       );
+      var localStorageValue = localStorage.getItem('textarea-0-cache') ;
+      if(localStorageValue) { 
+        document.getElementById('div-0').innerHTML = localStorageValue;
+        document.getElementById('textarea-0').value = localStorageValue;
+        }
       var textAreaContent ;
       // do something with the sdk
       //functions
@@ -49,32 +60,31 @@
           }
       );  */
       function textAreaChange() {
-        textAreaContent = textAreaContent || document.getElementById('textarea-0').value;
+        textAreaContent = document.getElementById('textarea-0').value;
 
         
 
         console.log('Text Area Change function called.')
         //setting super content (for preview)
-        sdk.setSuperContent(textAreaContent);
-        sdk.setContent(textAreaContent);//plain content. not json.
-        sdk.setData({inputText: textAreaContent});
+        sdk.setSuperContent(textAreaContent); 
+        sdk.setContent(textAreaContent); //optional
+        sdk.setData({inputText: textAreaContent}); //optional
 
-        console.log('Updated Text is --> ' + textAreaContent);
+        console.log('Super Text Content is --> ' + textAreaContent);
 
-        
       //Setting DIV tag & cache
       document.getElementById('div-0').innerHTML = textAreaContent;
       document.getElementById('textarea-0').value =textAreaContent;
       localStorage.setItem('textarea-0-cache', textAreaContent);
       //printing sdk object
-      console.log('SDK object --> ' + JSON.stringify(sdk));
+      console.log('SDK object after setting local storage --> ' + JSON.stringify(sdk));
 
 
       sdk.getData(function (data) {
         textAreaContent = data.inputText || 'textAreaContent is empty/ not saved';
         //sdk.setSuperContent(textAreaContent);
-        document.getElementById('textarea-0').value = textAreaContent + "is this available";
-        document.getElementById('div-0').innerHTML = textAreaContent + "is this available";
+        document.getElementById('textarea-0').value = localStorage.getItem('textarea-0-cache');;
+        document.getElementById('div-0').innerHTML = localStorage.getItem('textarea-0-cache');;
         console.log('Inside getData ' + JSON.stringify(data));
       });
       }
@@ -96,10 +106,5 @@
       
       
     </script>
-    <div id='textarea'>
-    <textarea id='textarea-0' placeholder='1. type here..' onchange="textAreaEventListner()"></textarea>  <!-- onchange="textAreaChange()"--> 
-    <!-- <input type="text" id="textarea-0"></input> -->
-    <div id='div-0'></div>
-    </div>
-  </body>
+    </body>
 </html>
