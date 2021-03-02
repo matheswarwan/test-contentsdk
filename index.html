@@ -6,9 +6,24 @@
       var sdk = new window.sfdc.BlockSDK();
       var textareacontent = '';
       // do something with the sdk
-
       //functions
+      /* function debounce (func, wait, immediate) {
+        var timeout;
+        return function() {
+          var context = this, args = arguments;
+          var later = function() {
+            timeout = null;
+            if (!immediate) func.apply(context, args);
+          };
+          var callNow = immediate && !timeout;
+          clearTimeout(timeout);
+          timeout = setTimeout(later, wait);
+          if (callNow) func.apply(context, args);
+        };
+      }
+      */
       function textAreaChange() {
+        console.log('Text Area Change function called.')
         textAreaContent = document.getElementById('textarea-0').value;
         //setting super content (for preview)
         sdk.setSuperContent(textAreaContent);
@@ -23,30 +38,32 @@
             console.log('[debug]: Get Data method' + JSON.stringify(data)); //+ data.textarea ); //+ ' textareacontent ' + textareacontent);
           }
         );
-
-      //get default value if available
-      //TODO: 
-      var textAreaElement = document.getElementById('textarea-0');
-      if (textAreaElement) { 
-        textAreaElement.addEventListener("input", 
-        function () {
-          console.log('typing..')
-          //debounce(paintMap, 500)();
-          textAreaChange();
-      });
-      }
-      
       //Setting DIV tag  
       document.getElementById('div-0').innerHTML = textAreaContent;
 
-      
-
+      //printing sdk object
+      console.log('SDK object --> ' + JSON.stringify(sdk));
       }
-      console.log('SDK object --> ' + sdk);
+
+      function textAreaEventListner() {
+        console.log('before debounce..');
+        //debounce(textAreaChange,500);
+        textAreaChange();
+      }
+
+      //TODO: get default value if available and set them
+      var textAreaElement = document.getElementById('textarea-0');
+      if (textAreaElement) { 
+        textAreaElement.addEventListener("input", te);
+      }
+      //Printing SDK after initilisation
+      console.log('SDK object on initilisation--> ' + JSON.stringify(sdk));
+      
     </script>
     <div id='textarea'>
-    <textarea id='textarea-0' onchange="textAreaChange()">default</textarea>  
-    <div id='div-0'>div</div>
+    <textarea id='textarea-0' placeholder='type here..' onchange="textAreaEventListner()"></textarea>  <!-- onchange="textAreaChange()"--> 
+    <!-- <input type="text" id="textarea-0"></input> -->
+    <div id='div-0'></div>
     </div>
   </body>
 </html>
