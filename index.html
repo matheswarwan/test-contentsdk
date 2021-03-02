@@ -4,7 +4,7 @@
     <script src="blocksdk.js"></script>
     <script>
       var sdk = new window.sfdc.BlockSDK();
-      var textareacontent = '';
+      var textAreaContent = '';
       // do something with the sdk
       //functions
       /* function debounce (func, wait, immediate) {
@@ -48,7 +48,7 @@
 
         console.log('Text Area Change function called.')
         //setting super content (for preview)
-        sdk.setSuperContent(textAreaContent);
+        sdk.setSuperContent({inputText: textAreaContent} );
         sdk.setContent({inputText: textAreaContent});//Callback not used
         sdk.setData({inputText: textAreaContent});
 
@@ -57,7 +57,7 @@
         
       //Setting DIV tag  
       document.getElementById('div-0').innerHTML = textAreaContent;
-
+      document.getElementById('textarea-0').value = textAreaContent;
       //printing sdk object
       console.log('SDK object --> ' + JSON.stringify(sdk));
       }
@@ -73,7 +73,13 @@
         textAreaElement.addEventListener("input", te);
       }*/
       //Printing SDK after initilisation
-      console.log('SDK object on initilisation--> ' + JSON.stringify(sdk));
+      console.log('SDK object on initilisation--> ' + JSON.stringify(sdk) + 'Get data comes now? ');
+
+
+      sdk.getData(function (data) {
+        textAreaContent = data.textAreaContent || 'textAreaContent is empty/ not saved';
+        console.log('Inside getData ' + JSON.stringify(data));
+      });
       
     </script>
     <div id='textarea'>
