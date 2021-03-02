@@ -6,8 +6,18 @@
       var sdk = new window.sfdc.BlockSDK();
       var textareacontent = '';
       // do something with the sdk
+
+      var textAreaElement = document.getElementById('textarea-0');
+      if (textAreaElement) { 
+        textAreaElement.addEventListener("input", 
+        function () {
+          console.log('typing..')
+          //debounce(paintMap, 500)();
+          textareachange();
+      });
+
+      }
       function textareachange() {
-        alert('ok');
         textareacontent = document.getElementById('textarea-0').value;
         console.log('textareacontent --> ' + textareacontent);
         sdk.setData( {
@@ -18,10 +28,14 @@
           function(data) 
           {
             console.log('Get User Data '); //+ data.textarea ); //+ ' textareacontent ' + textareacontent);
-            document.getElementById('div-0').value = "Some value";
           }
-
         );
+      //Setting DIV tag  
+      document.getElementById('div-0').innerHTML = textareacontent;
+
+      //setting super content (for preview)
+      sdk.setSuperContent(textareacontent);
+
       }
       console.log('SDK object --> ' + sdk);
     </script>
