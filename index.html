@@ -4,7 +4,7 @@
     <script src="blocksdk.js"></script>
     <script>
       var sdk = new window.sfdc.BlockSDK();
-      var textAreaContent = '';
+      var textAreaContent ;
       // do something with the sdk
       //functions
       /* function debounce (func, wait, immediate) {
@@ -42,14 +42,14 @@
           }
       );  */
       function textAreaChange() {
-        textAreaContent = document.getElementById('textarea-0').value;
+        textAreaContent = textAreaContent || document.getElementById('textarea-0').value;
 
         
 
         console.log('Text Area Change function called.')
         //setting super content (for preview)
         sdk.setSuperContent({inputText: textAreaContent} );
-        sdk.setContent({inputText: textAreaContent});//Callback not used
+        sdk.setContent(textAreaContent);//plain content. not json.
         sdk.setData({inputText: textAreaContent});
 
         console.log('Updated Text is --> ' + textAreaContent);
@@ -63,7 +63,8 @@
 
 
       sdk.getData(function (data) {
-        textAreaContent = data.textAreaContent || 'textAreaContent is empty/ not saved';
+        textAreaContent = data.inputText || 'textAreaContent is empty/ not saved';
+        sdk.setSuperContent(textAreaContent);
         document.getElementById('textarea-0').value = textAreaContent;
         console.log('Inside getData ' + JSON.stringify(data));
       });
@@ -87,7 +88,7 @@
       
     </script>
     <div id='textarea'>
-    <textarea id='textarea-0' placeholder='type here..' onchange="textAreaEventListner()"></textarea>  <!-- onchange="textAreaChange()"--> 
+    <textarea id='textarea-0' placeholder='1. type here..' onchange="textAreaEventListner()"></textarea>  <!-- onchange="textAreaChange()"--> 
     <!-- <input type="text" id="textarea-0"></input> -->
     <div id='div-0'></div>
     </div>
