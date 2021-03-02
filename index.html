@@ -57,9 +57,16 @@
         
       //Setting DIV tag  
       document.getElementById('div-0').innerHTML = textAreaContent;
-      document.getElementById('textarea-0').value = textAreaContent;
+      document.getElementById('textarea-0').value = JSON.stringfy(textAreaContent);
       //printing sdk object
       console.log('SDK object --> ' + JSON.stringify(sdk));
+
+
+      sdk.getData(function (data) {
+        textAreaContent = data.textAreaContent || 'textAreaContent is empty/ not saved';
+        document.getElementById('textarea-0').value = JSON.stringfy(textAreaContent);
+        console.log('Inside getData ' + JSON.stringify(data));
+      });
       }
 
       function textAreaEventListner() {
@@ -73,13 +80,10 @@
         textAreaElement.addEventListener("input", te);
       }*/
       //Printing SDK after initilisation
-      console.log('SDK object on initilisation--> ' + JSON.stringify(sdk) + 'Get data comes now? ');
+      console.log('SDK object on initilisation--> ' + JSON.stringify(sdk) );
 
 
-      sdk.getData(function (data) {
-        textAreaContent = data.textAreaContent || 'textAreaContent is empty/ not saved';
-        console.log('Inside getData ' + JSON.stringify(data));
-      });
+      
       
     </script>
     <div id='textarea'>
