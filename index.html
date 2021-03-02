@@ -1,4 +1,8 @@
-<html>
+<!--
+  TODO:
+  1. Debounce login instead of onchange
+  2. Icon file change
+  --><html>
   <head></head>
   <body>
   <div id='textarea'>
@@ -61,9 +65,6 @@
       );  */
       function textAreaChange() {
         textAreaContent = document.getElementById('textarea-0').value;
-
-        
-
         console.log('Text Area Change function called.')
         //setting super content (for preview)
         sdk.setSuperContent(textAreaContent); 
@@ -72,21 +73,27 @@
 
         console.log('Super Text Content is --> ' + textAreaContent);
 
-      //Setting DIV tag & cache
-      document.getElementById('div-0').innerHTML = textAreaContent;
-      document.getElementById('textarea-0').value =textAreaContent;
-      localStorage.setItem('textarea-0-cache', textAreaContent);
-      //printing sdk object
-      console.log('SDK object after setting local storage --> ' + JSON.stringify(sdk));
+        //Setting DIV tag & cache
+        document.getElementById('div-0').innerHTML = textAreaContent;
+        document.getElementById('textarea-0').value =textAreaContent;
+        localStorage.setItem('textarea-0-cache', textAreaContent);
+        //printing sdk object
+        console.log('SDK object after setting local storage --> ' + JSON.stringify(sdk));
 
 
-      sdk.getData(function (data) {
-        textAreaContent = data.inputText || 'textAreaContent is empty/ not saved';
-        //sdk.setSuperContent(textAreaContent);
-        document.getElementById('textarea-0').value = localStorage.getItem('textarea-0-cache');;
-        document.getElementById('div-0').innerHTML = localStorage.getItem('textarea-0-cache');;
-        console.log('Inside getData ' + JSON.stringify(data));
-      });
+        sdk.getData(function (data) {
+          textAreaContent = data.inputText || 'textAreaContent is empty/ not saved';
+          //sdk.setSuperContent(textAreaContent);
+          document.getElementById('textarea-0').value = localStorage.getItem('textarea-0-cache');;
+          document.getElementById('div-0').innerHTML = localStorage.getItem('textarea-0-cache');;
+          console.log('Inside getData ' + JSON.stringify(data));
+        });
+
+        sdk.getCentralData(function(centralData) {
+          console.log('Get Central Data' + JSON.stringify(centralData));
+        });
+
+
       }
 
       function textAreaEventListner() {
