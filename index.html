@@ -4,7 +4,7 @@
     <div id="textarea">
       <textarea
         id="textarea-0"
-        placeholder="type here.."
+        placeholder="type here.. 0.1"
         style="width: 100%; height: 50%"
       ></textarea>
       <div id="div-0"></div>
@@ -30,12 +30,17 @@
       });
 
       sdk.getData(function (data) {
-        if (data) {
+        console.log("[MK]: what is this in get Data? " + JSON.stringify(data));
+        /* if (data) {
           document.getElementById("textarea-0").value = data;
-        }
+        } */
       });
       sdk.getContent(function (data) {
         //console.log("data in getContent --> " + data);
+        console.log("[MK]: what is this get Content? " + JSON.stringify(data));
+        if (data) {
+          document.getElementById("textarea-0").value = data;
+        }
       });
 
       sdk.getCentralData(function (centralData) {
