@@ -72,9 +72,20 @@
                         }
                       }
                     }
-                  }       
+                  }     
+        var metaValue =   ` {
+                  "options": {   
+                    "customBlockData": {
+                        "dmRichTextBlock": {
+                          "selectionName": "Rich Text Block",
+                          "description": "",
+                          "charLimit": "4000"
+                        }
+                      }
+                    }
+                  } `
 
-        sdk.setData(meta);
+        sdk.setData(metaValue);
       }
       //Event Listener
       document.getElementById("textarea-0").addEventListener(
