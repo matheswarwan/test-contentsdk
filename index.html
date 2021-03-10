@@ -35,6 +35,7 @@
                     <div id="div-0"></div>
                   </div>`;
       sdk.setSuperContent(textAreaHTML);
+      sdk.setContent(textAreaHTML);
       
 
       sdk.setBlockEditorWidth("500px", function (data) {
@@ -61,7 +62,19 @@
         textAreaContent = document.getElementById("textarea-0").value;
         sdk.setSuperContent(textAreaContent);
         sdk.setContent(textAreaContent);
-        sdk.setData(textAreaContent);
+        var meta = `{
+                      "customBlockData": {
+                        "dmRichTextBlock": {
+                          "dmBlockId": 1615334367095,
+                          "version": 1,
+                          "selectionName": "Rich Text Block",
+                          "description": "",
+                          "charLimit": "4000"
+                        }
+                      }
+                    }`
+
+        sdk.setData(meta);
       }
       //Event Listener
       document.getElementById("textarea-0").addEventListener(
