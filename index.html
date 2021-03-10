@@ -63,16 +63,26 @@
         sdk.setSuperContent(textAreaContent);
         sdk.setContent(textAreaContent);
         var meta = {
-                  "options": {   
-                    "customBlockData": {
-                        "dmRichTextBlock": {
-                          "selectionName": "Rich Text Block",
-                          "description": "",
-                          "charLimit": "4000"
-                        }
+                      "customBlockKey": "7536110c-fd2f-4adb-a883-e0eca2db17f2",
+                      "wrapperStyles": {
+                          "mobile": {
+                              "visible": true
+                          },
+                          "styling": {
+                          }
+                      },
+                      "options": {
+                          "customBlockData": {
+                              "dmRichTextBlock": {
+                                  "dmBlockId": 1615334367095,
+                                  "version": 1,
+                                  "selectionName": "Rich Text Block",
+                                  "description": "",
+                                  "charLimit": "4000"
+                              }
+                          }
                       }
-                    }
-                  }     
+                  }    
         var metaValue =   ` {
                   "options": {   
                     "customBlockData": {
@@ -85,7 +95,7 @@
                     }
                   } `
 
-        sdk.setData(metaValue);
+        sdk.setData(meta);
       }
       //Event Listener
       document.getElementById("textarea-0").addEventListener(
