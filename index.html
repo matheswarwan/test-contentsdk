@@ -50,14 +50,32 @@
                     <textarea id="textarea-0" placeholder="Type here.."></textarea>
                     <div id="div-0"></div>
                   </div>`;
+
+      textAreaAmpscriptHTML = `<table cellpadding="0" cellspacing="0" width="100%" role="presentation" style="min-width: 100%; "
+                    class="stylingblock-content-wrapper">
+                    <tr>
+                        <td class="stylingblock-content-wrapper camarker-inner">%%[/* DO NOT TOUCH */\nSet @sfOrgId =
+                            RegExMatch(AttributeValue("sfOrgId"),"(^[a-zA-Z0-9]{18}$)",1)\nSet @richText =
+                            AttributeValue("1615334367095") /* Passed for the DM Email Preview */\nSet @objectId =
+                            IIF(EMPTY(AttributeValue("sfCampaignMemberId")), AttributeValue("id"),
+                            AttributeValue("sfCampaignMemberId"))\nSet @journeyId =
+                            RegExMatch(AttributeValue("journeyId"),"(^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$)",1)\nSet
+                            @personalizeDE = Concat("PersonalizationDE", "_" , @sfOrgId, "_", @journeyId)\nSet @personalizeId =
+                            Concat(@objectId,_emailId,"1615334367095")\nIF EMPTY(@richText) THEN\n Set @richTextMsg =
+                            Lookup(@personalizeDE,"value","id",@personalizeId)\nELSE THEN\n Set @richTextMsg = @richText\nENDIF\nSet
+                            @richTextMsg = Concat('<div class="dm-rich-text-block" data-dm-block-id="1615334367095">', @richTextMsg,
+                                '</div>')\n]%%\n%%=v(@richTextMsg)=%%\n%%[*/ DO NOT TOUCH */]%%</td>
+                    </tr>
+                </table>`;
+
       sdk.setSuperContent(textBlockHTML);
-      sdk.setContent(textAreaHTML);
+      sdk.setContent(textAreaAmpscriptHTMLs);
       /* -SET METADATA START- */
       var customBlockData = new Object();
       customBlockData.dmRichTextBlock = new Object();
       customBlockData.dmRichTextBlock.dmBlockId = 1615334367096;
       customBlockData.dmRichTextBlock.version = 1;
-      customBlockData.dmRichTextBlock.selectionName = "GSDM Rich Text Block";
+      customBlockData.dmRichTextBlock.selectionName = "GSDM Free Text Block";
       customBlockData.dmRichTextBlock.description = "Enter content here" ;
       customBlockData.dmRichTextBlock.charLimit = "4000"
       
