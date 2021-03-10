@@ -36,7 +36,26 @@
                   </div>`;
       sdk.setSuperContent(textAreaHTML);
       sdk.setContent(textAreaHTML);
-      
+      /* -SET METADATA START- */
+      var options = new Object();
+      options.customBlockData = "Test Value";
+      var metaValue =   ` {
+                "options": {   
+                  "customBlockData": {
+                      "dmRichTextBlock": {
+                        "selectionName": "Rich Text Block",
+                        "description": "",
+                        "charLimit": "4000"
+                      }
+                    }
+                  }
+                } `
+
+      sdk.setData(options, function(data) {
+        console.log('Received metadata from setData ==> ' + JSON.stringify(data));
+      });
+
+      /* -END- */
 
       sdk.setBlockEditorWidth("500px", function (data) {
         console.log("setBlockEditorWidth --> " + JSON.stringify(data));
@@ -62,19 +81,8 @@
         textAreaContent = document.getElementById("textarea-0").value;
         sdk.setSuperContent(textAreaContent);
         sdk.setContent(textAreaContent);
-        var meta = {
-                    "options": {
-                      "customBlockData": {
-                        "dmRichTextBlock": {
-                          "dmBlockId": 1615334367096,
-                          "version": 1,
-                          "selectionName": "Rich Text Block",
-                          "description": "MK Rich Text",
-                          "charLimit": "4000"
-                        }
-                      }
-                    }
-                  }  
+        var options = new Object();
+        options.customBlockData = "Test Value";
         var metaValue =   ` {
                   "options": {   
                     "customBlockData": {
@@ -87,7 +95,7 @@
                     }
                   } `
 
-        sdk.setData(meta, function(data) {
+        sdk.setData(options, function(data) {
           console.log('Received metadata from setData ==> ' + JSON.stringify(data));
         });
       }
