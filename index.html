@@ -37,21 +37,15 @@
       sdk.setSuperContent(textAreaHTML);
       sdk.setContent(textAreaHTML);
       /* -SET METADATA START- */
-      var options = new Object();
-      options.customBlockData = "Test Value";
-      var metaValue =   ` {
-                "options": {   
-                  "customBlockData": {
-                      "dmRichTextBlock": {
-                        "selectionName": "Rich Text Block",
-                        "description": "",
-                        "charLimit": "4000"
-                      }
-                    }
-                  }
-                } `
-
-      sdk.setData(options, function(data) {
+      var customBlockData = new Object();
+      customBlockData.dmRichTextBlock = new Object();
+      customBlockData.dmRichTextBlock.dmBlockId = 1615334367096;
+      customBlockData.dmRichTextBlock.version = 1;
+      customBlockData.dmRichTextBlock.selectionName = "GSDM Rich Text Block";
+      customBlockData.dmRichTextBlock.description = "Enter content here" ;
+      customBlockData.dmRichTextBlock.charLimit = "4000"
+      
+      sdk.setData(customBlockData, function(data) {
         console.log('Received metadata from setData ==> ' + JSON.stringify(data));
       });
 
@@ -81,23 +75,20 @@
         textAreaContent = document.getElementById("textarea-0").value;
         sdk.setSuperContent(textAreaContent);
         sdk.setContent(textAreaContent);
-        var options = new Object();
-        options.customBlockData = "Test Value";
-        var metaValue =   ` {
-                  "options": {   
-                    "customBlockData": {
-                        "dmRichTextBlock": {
-                          "selectionName": "Rich Text Block",
-                          "description": "",
-                          "charLimit": "4000"
-                        }
-                      }
-                    }
-                  } `
+         /* -SET METADATA START- */
+      var customBlockData = new Object();
+      customBlockData.dmRichTextBlock = new Object();
+      customBlockData.dmRichTextBlock.dmBlockId = 1615334367096;
+      customBlockData.dmRichTextBlock.version = 1;
+      customBlockData.dmRichTextBlock.selectionName = "GSDM Rich Text Block";
+      customBlockData.dmRichTextBlock.description = "Enter content here" ;
+      customBlockData.dmRichTextBlock.charLimit = "4000"
+      
+      sdk.setData(customBlockData, function(data) {
+        console.log('Received metadata from setData ==> ' + JSON.stringify(data));
+      });
 
-        sdk.setData(options, function(data) {
-          console.log('Received metadata from setData ==> ' + JSON.stringify(data));
-        });
+      /* -END- */
       }
       //Event Listener
       document.getElementById("textarea-0").addEventListener(
