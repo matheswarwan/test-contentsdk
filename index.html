@@ -134,8 +134,13 @@
                     </tr>
                 </table>`;
 
+      
+      
       sdk.setSuperContent(textBlockHTML);
-      sdk.setContent(textAreaAmpscriptHTML);
+      
+      //Temp:
+      var selectionName = document.getElementById('selectionName').value;
+      sdk.setContent(selectionName);
       /* -SET METADATA START- */
       var customBlockData = new Object();
       customBlockData.dmRichTextBlock = new Object();
