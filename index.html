@@ -1,10 +1,76 @@
 <html>
   <head> </head>
+  <link rel="stylesheet" href="salesforce-lightning-design-system.css">
+  <style>
+  @font-face{
+    font-family: Reef;
+    src: url('SalesforceSans-Light.woff2'), url('SalesforceSans-Regular.woff2') format('woff2');
+    }
+  </style>
   <body>
   </div>
+  <!--
       <textarea id="textarea-0" placeholder="Type here.."></textarea>
       <div id="div-0"></div>
-    </div> 
+    </div> -->
+    <div id="app">
+    <div>
+        <div class="slds-col slds-text-heading_small slds-p-left_medium slds-p-vertical_xx-small slds-theme_shade">
+            Settings</div>
+        <div class="slds-grid slds-grid_vertical slds-p-around_small">
+            <div class="slds-col image-option-input">
+                <div class="slds-form-element"><label class="slds-form-element__label" for="selectionName"><abbr
+                            class="slds-required" title="required">*</abbr>Selection Name</label>
+                    <div class="slds-tooltip-trigger slds-form-element__icon"
+                        style="display: inline-block; position: static;"><button class="slds-button slds-button_icon"
+                            type="button" aria-disabled="true" aria-describedby="field-level-help-tooltip"><svg
+                                aria-hidden="true" class="slds-button__icon">
+                                <use
+                                    xlink:href="dafb4c6441e4ff7df9afdbbf0baa4797.svg#info">
+                                </use>
+                            </svg><span class="slds-assistive-text">Help</span></button><span></span></div>
+                    <div class="slds-form-element__control"><input class="slds-input" id="selectionName" maxlength="50"
+                            required="" type="text" value="Free Text Block"></div>
+                </div>
+            </div>
+            <div class="slds-col">
+                <div class="slds-form-element"><label class="slds-form-element__label" for="description">Guidance
+                        Message</label>
+                    <div class="slds-form-element__control"><textarea class="slds-textarea description-textarea"
+                            id="description" placeholder="Leave instructions here for your business users."></textarea>
+                    </div>
+                </div>
+            </div>
+            <div class="slds-col">
+                <div class="slds-form-element"><label class="slds-form-element__label" for="charLimit">Character
+                        Limit</label>
+                    <div class="slds-tooltip-trigger slds-form-element__icon"
+                        style="display: inline-block; position: static;"><button class="slds-button slds-button_icon"
+                            type="button" aria-disabled="true" aria-describedby="field-level-help-tooltip"><svg
+                                aria-hidden="true" class="slds-button__icon">
+                                <use
+                                    xlink:href="dafb4c6441e4ff7df9afdbbf0baa4797.svg#info">
+                                </use>
+                            </svg><span class="slds-assistive-text">Help</span></button><span></span></div>
+                    <div class="slds-form-element__control"><button
+                            class="slds-button slds-button_icon slds-button_icon-small slds-input__button_decrement"
+                            type="button"><svg aria-hidden="true" class="slds-button__icon">
+                                <use
+                                    xlink:href="dafb4c6441e4ff7df9afdbbf0baa4797.svg#ban">
+                                </use>
+                            </svg></button><input class="slds-input slds-input_counter" id="charLimit" min="50"
+                            max="4000" step="50" type="number" value="4000"><button
+                            class="slds-button slds-button_icon slds-button_icon-small slds-input__button_increment"
+                            disabled="" type="button"><svg aria-hidden="true" class="slds-button__icon">
+                                <use
+                                    xlink:href="dafb4c6441e4ff7df9afdbbf0baa4797.svg#new">
+                                </use>
+                            </svg></button></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
     <script src="blocksdk.js"></script>
     <script>
@@ -25,6 +91,7 @@
         tabs: ["htmlblock", "stylingblock"],
       });
 
+      //Grey html that reads - GSDM Plain Text Block 
       textBlockHTML = `<table cellpadding="0 " cellspacing="0 " width="100% " role="presentation " style="min-width: 100%;  "
     class="stylingblock-content-wrapper ">
                         <tr>
@@ -42,11 +109,14 @@
                         </tr>
                     </table>`;
 
+      //HTML Text area that should be rendered when 'edit' is clicked and the value from this should be set to setData
       textAreaHTML = `</div class="dm-rich-text-block editable no-text" data-dm-block-id="1615334367096" data-content="Click To Edit">
                     <textarea id="textarea-0" placeholder="Type here.."></textarea>
                     <div id="div-0"></div>
                   </div>`;
 
+      
+      //HTML with AMPScript that fetches data from personalised DE
       textAreaAmpscriptHTML = `<table cellpadding="0" cellspacing="0" width="100%" role="presentation" style="min-width: 100%; "
                     class="stylingblock-content-wrapper">
                     <tr>
@@ -63,65 +133,6 @@
                                 '</div>')\n]%%\n%%=v(@richTextMsg)=%%\n%%[*/ DO NOT TOUCH */]%%</td>
                     </tr>
                 </table>`;
-
-      blockSectionHTML = `<div id="app">
-                            <div>
-                                <div class="slds-col slds-text-heading_small slds-p-left_medium slds-p-vertical_xx-small slds-theme_shade">
-                                    Settings</div>
-                                <div class="slds-grid slds-grid_vertical slds-p-around_small">
-                                    <div class="slds-col image-option-input">
-                                        <div class="slds-form-element"><label class="slds-form-element__label" for="selectionName"><abbr
-                                                    class="slds-required" title="required">*</abbr>Selection Name</label>
-                                            <div class="slds-tooltip-trigger slds-form-element__icon"
-                                                style="display: inline-block; position: static;"><button class="slds-button slds-button_icon"
-                                                    type="button" aria-disabled="true" aria-describedby="field-level-help-tooltip"><svg
-                                                        aria-hidden="true" class="slds-button__icon">
-                                                        <use
-                                                            xlink:href="dafb4c6441e4ff7df9afdbbf0baa4797.svg#info">
-                                                        </use>
-                                                    </svg><span class="slds-assistive-text">Help</span></button><span></span></div>
-                                            <div class="slds-form-element__control"><input class="slds-input" id="selectionName" maxlength="50"
-                                                    required="" type="text" value="Free Text Block"></div>
-                                        </div>
-                                    </div>
-                                    <div class="slds-col">
-                                        <div class="slds-form-element"><label class="slds-form-element__label" for="description">Guidance
-                                                Message</label>
-                                            <div class="slds-form-element__control"><textarea class="slds-textarea description-textarea"
-                                                    id="description" placeholder="Leave instructions here for your business users."></textarea>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="slds-col">
-                                        <div class="slds-form-element"><label class="slds-form-element__label" for="charLimit">Character
-                                                Limit</label>
-                                            <div class="slds-tooltip-trigger slds-form-element__icon"
-                                                style="display: inline-block; position: static;"><button class="slds-button slds-button_icon"
-                                                    type="button" aria-disabled="true" aria-describedby="field-level-help-tooltip"><svg
-                                                        aria-hidden="true" class="slds-button__icon">
-                                                        <use
-                                                            xlink:href="dafb4c6441e4ff7df9afdbbf0baa4797.svg#info">
-                                                        </use>
-                                                    </svg><span class="slds-assistive-text">Help</span></button><span></span></div>
-                                            <div class="slds-form-element__control"><button
-                                                    class="slds-button slds-button_icon slds-button_icon-small slds-input__button_decrement"
-                                                    type="button"><svg aria-hidden="true" class="slds-button__icon">
-                                                        <use
-                                                            xlink:href="dafb4c6441e4ff7df9afdbbf0baa4797.svg#ban">
-                                                        </use>
-                                                    </svg></button><input class="slds-input slds-input_counter" id="charLimit" min="50"
-                                                    max="4000" step="50" type="number" value="4000"><button
-                                                    class="slds-button slds-button_icon slds-button_icon-small slds-input__button_increment"
-                                                    disabled="" type="button"><svg aria-hidden="true" class="slds-button__icon">
-                                                        <use
-                                                            xlink:href="dafb4c6441e4ff7df9afdbbf0baa4797.svg#new">
-                                                        </use>
-                                                    </svg></button></div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>`;
 
       sdk.setSuperContent(textBlockHTML);
       sdk.setContent(textAreaAmpscriptHTML);
