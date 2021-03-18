@@ -97,7 +97,7 @@
 
       */
       var editableSectionName = 
-      `<div class="dm-text-area editable" data-dm-block-id="`+blockId+`" data-content="Click To Edit">
+      `<div data-dm-block-id="`+blockId+`" data-content="Click To Edit (B)">
       </div>`;
       console.log("[Debug]: editableSectionName => "+ editableSectionName);
       sdk.setContent(editableSectionName);
@@ -110,7 +110,7 @@
       customBlockData.dmRichTextBlock = new Object();
       customBlockData.dmRichTextBlock.dmBlockId = blockId;
       customBlockData.dmRichTextBlock.version = 1;
-      customBlockData.dmRichTextBlock.selectionName = document.getElementById("selectionName").value + "..";
+      customBlockData.dmRichTextBlock.selectionName = document.getElementById("selectionName").value + "<Initial Load>";
       customBlockData.dmRichTextBlock.description = document.getElementById("description").value;
       customBlockData.dmRichTextBlock.charLimit = document.getElementById("charLimit").value;
 
@@ -132,7 +132,7 @@ MATHES - see this get data value --> {"dmRichTextBlock":{"dmBlockId":16153343670
       sdk.getData(function (data) { 
         console.log("MATHES - see this get data value --> " + JSON.stringify(data));
         if (data) {
-          document.getElementById("selectionName").value = data["dmRichTextBlock"]["selectionName"] + "..";
+          document.getElementById("selectionName").value = data["dmRichTextBlock"]["selectionName"] + "<GetData>";
         }
       });
       sdk.getContent(function (data) {
