@@ -114,9 +114,15 @@
       sdk.setBlockEditorWidth("500px", function (data) {
         console.log("setBlockEditorWidth --> " + JSON.stringify(data));
       });
+  /* 
+    Received metadata from setData ==> {"dmRichTextBlock":{"dmBlockId":1615334367096,"version":1,"selectionName":"SF DM Block","description":"Set Guidance Msg.","charLimit":"4000"}}
 
+  */
       sdk.getData(function (data) { 
-        console.log("MATHES - see this get data value --> " JSON.stringify(data));
+        console.log("MATHES - see this get data value --> " + JSON.stringify(data));
+        if (data) {
+          document.getElementById("selectionName").value = data["dmRichTextBlock"]["selectionName"];
+        }
       });
       sdk.getContent(function (data) {
         if (data) {
