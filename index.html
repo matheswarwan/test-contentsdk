@@ -105,6 +105,7 @@
 
       console.log("[Mathes - 2] : Before opening selectionNameNew|" + document.getElementById("selectionNameNew").value + "|" + document.getElementById("description").value)
 
+
       /* -SET METADATA START- */
       var customBlockData = new Object();
       customBlockData.dmRichTextBlock = new Object();
@@ -113,14 +114,22 @@
       customBlockData.dmRichTextBlock.selectionName = document.getElementById("selectionNameNew").value + "<Initial Load>";
       customBlockData.dmRichTextBlock.description = document.getElementById("description").value;
       customBlockData.dmRichTextBlock.charLimit = document.getElementById("charLimit").value;
+      /* -END- */
 
-      sdk.setData(customBlockData, function (data) {
+      sdk.getData(function (data) { 
+        console.log("MATHES - see this get data value --> " + JSON.stringify(data));
+        if (data) {
+          document.getElementById("selectionNameNew").value = data["dmRichTextBlock"]["selectionName"] + "<GetData>";
+        }
+      });
+      
+
+      /* sdk.setData(customBlockData, function (data) {
         console.log(
           "Received metadata from setData ==> " + JSON.stringify(data)
         );
-      });
+      });*/
 
-      /* -END- */
 
       sdk.setBlockEditorWidth("500px", function (data) {
         console.log("setBlockEditorWidth --> " + JSON.stringify(data));
@@ -129,12 +138,7 @@
 MATHES - see this get data value --> {"dmRichTextBlock":{"dmBlockId":1615334367096,"version":1,"selectionName":"SF DM Block","description":"Set Guidance Msg.","charLimit":"4000"}}
 
   */
-      sdk.getData(function (data) { 
-        console.log("MATHES - see this get data value --> " + JSON.stringify(data));
-        if (data) {
-          document.getElementById("selectionNameNew").value = data["dmRichTextBlock"]["selectionName"] + "<GetData>";
-        }
-      });
+
       sdk.getContent(function (data) {
         if (data) {
           //document.getElementById("textarea-0").value = data;
