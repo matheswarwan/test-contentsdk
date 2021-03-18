@@ -121,12 +121,13 @@ MATHES - see this get data value --> {"dmRichTextBlock":{"dmBlockId":16153343670
       sdk.getData(function (data) { 
         console.log("MATHES - see this get data value --> " + JSON.stringify(data));
         if (data) {
-          document.getElementById("selectionName").value = data["dmRichTextBlock"]["selectionName"] + " Updated value?";
+          document.getElementById("selectionName").value = data["dmRichTextBlock"]["selectionName"] + "..";
         }
       });
       sdk.getContent(function (data) {
         if (data) {
-          document.getElementById("textarea-0").value = data;
+          //document.getElementById("textarea-0").value = data;
+          console.log("Data in getContent --> " + JSON.stringify(data));
         }
       });
 
