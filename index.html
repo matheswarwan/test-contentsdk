@@ -94,12 +94,14 @@
       sdk.setContent(editableSectionName);
       sdk.setSuperContent(greyHTMLBlock);
 
+      console.log("[Mathes - 2] : Before opening.. " + document.getElementById("selectionName").value + " - " + document.getElementById("description").value)
+
       /* -SET METADATA START- */
       var customBlockData = new Object();
       customBlockData.dmRichTextBlock = new Object();
       customBlockData.dmRichTextBlock.dmBlockId = blockId;
       customBlockData.dmRichTextBlock.version = 1;
-      customBlockData.dmRichTextBlock.selectionName = document.getElementById("selectionName").value;
+      customBlockData.dmRichTextBlock.selectionName = document.getElementById("selectionName").value + "..";
       customBlockData.dmRichTextBlock.description = document.getElementById("description").value;
       customBlockData.dmRichTextBlock.charLimit = document.getElementById("charLimit").value;
 
