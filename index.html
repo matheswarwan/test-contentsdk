@@ -67,7 +67,7 @@
                     </tr>
                 </table>`;
 
-      sdk.setSuperContent(textBlockHTML);
+      //sdk.setSuperContent(textBlockHTML);
 
       //Temp:
       var selectionName = `<div data-marker="wrapper" style="" class="stylingblock-content-wrapper">
@@ -91,6 +91,8 @@
                                                                           </div>`;
       
       sdk.setContent(editableSectionName);
+      sdk.setSuperContent(editableSectionName);
+
       /* -SET METADATA START- */
       var customBlockData = new Object();
       customBlockData.dmRichTextBlock = new Object();
