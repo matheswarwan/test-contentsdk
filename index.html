@@ -91,16 +91,16 @@
                                                                           </div>`;
       
       sdk.setContent(editableSectionName);
-      sdk.setSuperContent(editableSectionName);
+      //sdk.setSuperContent(editableSectionName);
 
       /* -SET METADATA START- */
       var customBlockData = new Object();
       customBlockData.dmRichTextBlock = new Object();
       customBlockData.dmRichTextBlock.dmBlockId = 1615334367096;
       customBlockData.dmRichTextBlock.version = 1;
-      customBlockData.dmRichTextBlock.selectionName = "GSDM Free Text Block";
-      customBlockData.dmRichTextBlock.description = "Enter content here";
-      customBlockData.dmRichTextBlock.charLimit = "4000";
+      customBlockData.dmRichTextBlock.selectionName = document.getElementById("selectionName").value;
+      customBlockData.dmRichTextBlock.description = document.getElementById("description").value;
+      customBlockData.dmRichTextBlock.charLimit = document.getElementById("charLimit").value;
 
       sdk.setData(customBlockData, function (data) {
         console.log(
