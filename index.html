@@ -150,53 +150,37 @@ MATHES - see this get data value --> {"dmRichTextBlock":{"dmBlockId":16153343670
         console.log("Get User Data : " + JSON.stringify(userData));
       });
       
-      /*var textAreaContent;
+      var textAreaContent;
 
        function sendDatatoMC() {
-        textAreaContent = document.getElementById("textarea-0").value;
-        sdk.setSuperContent(textAreaContent);
-        sdk.setContent(textAreaContent);
-        / * -SET METADATA START- * /
+        selectionNameNewContent = document.getElementById("selectionNameNew").value;
+        /* -SET METADATA START- */
         var customBlockData = new Object();
         customBlockData.dmRichTextBlock = new Object();
         customBlockData.dmRichTextBlock.dmBlockId = 1615334367096;
         customBlockData.dmRichTextBlock.version = 1;
-        customBlockData.dmRichTextBlock.selectionName = "GSDM Rich Text Block";
-        customBlockData.dmRichTextBlock.description = "Enter content here";
-        customBlockData.dmRichTextBlock.charLimit = "4000";
+        customBlockData.dmRichTextBlock.selectionName = document.getElementById("selectionNameNew").value + "<Inside Debounce>";
+        customBlockData.dmRichTextBlock.description = document.getElementById("description").value;
+        customBlockData.dmRichTextBlock.charLimit = document.getElementById("charLimit").value;
 
         sdk.setData(customBlockData, function (data) {
           console.log(
-            "Received metadata from setData ==> " + JSON.stringify(data)
+            "Received metadata from setData within Debounce ==> " + JSON.stringify(data)
           );
         });
-              / * -END- * /
+              /* -END- */
 
-      } */
+      } 
 
       //Event Listener
-      /* document.getElementById("textarea-0").addEventListener(
+      document.getElementById("selectionNameNew").addEventListener(
         "input",
         debounce((e) => {
-          document.getElementById("div-0").innerHTML =
-            //'<font face="verdana">
-            '(' +
-            document.getElementById("textarea-0").value.length +
-            "/4000) " +
-            (4000 - document.getElementById("textarea-0").value.length) +
-            " characters left.";// +
-            //"</font>";
+          console.log("[Debug]: Event Listner after debounce --> " + JSON.stringify(e));
           sendDatatoMC();
         }, 500)
       );
-      document.getElementById("div-0").innerHTML =
-        //'<font face="verdana">
-        '(' +
-        document.getElementById("textarea-0").value.length +
-        "/4000) " +
-        (4000 - document.getElementById("textarea-0").value.length) +
-        " characters left."; // +
-       // "</font>";*/
+      
     </script>
   </body>
 </html>
