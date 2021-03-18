@@ -26,7 +26,7 @@
       });
 
       //Grey html that reads - GSDM Plain Text Block
-      textBlockHTML = `<table cellpadding="0 " cellspacing="0 " width="100% " role="presentation " style="min-width: 100%;  "
+      greyHTMLBlock = `<table cellpadding="0 " cellspacing="0 " width="100% " role="presentation " style="min-width: 100%;  "
     class="stylingblock-content-wrapper ">
                         <tr>
                             <td class="stylingblock-content-wrapper camarker-inner ">
@@ -91,7 +91,7 @@
                                                                           </div>`;
       
       sdk.setContent(editableSectionName);
-      //sdk.setSuperContent(editableSectionName);
+      sdk.setSuperContent(greyHTMLBlock);
 
       /* -SET METADATA START- */
       var customBlockData = new Object();
