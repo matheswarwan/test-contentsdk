@@ -120,14 +120,12 @@
         console.log("MATHES - see this get data value --> " + JSON.stringify(data));
         if (data) {
           document.getElementById("selectionNameNew").value = data["dmRichTextBlock"]["selectionName"] + "<GetData>";
-
+        }
           sdk.setData(customBlockData, function (data) {
           console.log(
             "Received metadata from setData within ***getData*** ==> " + JSON.stringify(data)
           );
         });
-
-        }
       });
       
 
