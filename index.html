@@ -115,25 +115,26 @@
       customBlockData.dmRichTextBlock.description = document.getElementById("description").value;
       customBlockData.dmRichTextBlock.charLimit = document.getElementById("charLimit").value;
       /* -END- */
-
+      
       sdk.getData(function (data) { 
         console.log("MATHES - see this get data value --> " + JSON.stringify(data));
         if (data) {
           document.getElementById("selectionNameNew").value = data["dmRichTextBlock"]["selectionName"] + "<GetData>";
-        }
           sdk.setData(customBlockData, function (data) {
           console.log(
             "Received metadata from setData within ***getData*** ==> " + JSON.stringify(data)
           );
         });
+        }
+          
       });
-      
 
-      /* sdk.setData(customBlockData, function (data) {
+
+      sdk.setData(customBlockData, function (data) {
         console.log(
-          "Received metadata from setData ==> " + JSON.stringify(data)
+          "Received metadata from setData outside getData on page load ==> " + JSON.stringify(data)
         );
-      });*/
+      });
 
 
       sdk.setBlockEditorWidth("500px", function (data) {
