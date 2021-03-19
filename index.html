@@ -116,6 +116,12 @@
       customBlockData.dmRichTextBlock.charLimit = document.getElementById("charLimit").value;
       /* -END- */
       
+      sdk.setData(customBlockData, function (data) {
+        console.log(
+          "Received metadata from setData outside getData on page load ==> " + JSON.stringify(data)
+        );
+      });
+
       sdk.getData(function (data) { 
         console.log("MATHES - see this get data value --> " + JSON.stringify(data));
         if (data) {
@@ -130,11 +136,6 @@
       });
 
 
-      sdk.setData(customBlockData, function (data) {
-        console.log(
-          "Received metadata from setData outside getData on page load ==> " + JSON.stringify(data)
-        );
-      });
 
 
       sdk.setBlockEditorWidth("500px", function (data) {
