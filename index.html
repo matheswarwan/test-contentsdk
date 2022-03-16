@@ -48,11 +48,11 @@
 
       function sendDatatoMC() {
         textAreaContent = document.getElementById("textarea-0").value;
-        sdk.setSuperContent(textAreaContent);
-        //sdk.setContent(textAreaContent);
-        sdk.setData(textAreaContent);
+        sdk.setSuperContent(textAreaContent + "Super Content");
+        sdk.setContent(textAreaContent + " Content ");
+        sdk.setData(textAreaContent + " Data ");
         var mjmlRenderedContent = renderMjml(textAreaContent);
-        sdk.setContent(mjmlRenderedContent);
+        //sdk.setContent(mjmlRenderedContent);
       }
 
       function renderMjml(textAreaContent) {
