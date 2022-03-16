@@ -52,7 +52,7 @@
         sdk.setContent(textAreaContent);
         sdk.setData(textAreaContent);
         var mjmlRenderedContent = renderMjml(textAreaContent);
-        sdk.setSuperContent(mjmlRenderedContent);
+        //sdk.setSuperContent(mjmlRenderedContent);
       }
 
       function renderMjml(textAreaContent) {
@@ -82,6 +82,7 @@
             if (result.status == 200) {
                 console.log("HTML received")
                 console.log(result.data.html)
+                sdk.setSuperContent(mjmlRenderedContent);
                 return result.data.html
             } else {
                 console.log("HTML Not received");
