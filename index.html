@@ -4,7 +4,7 @@
     <div id="textarea">
       <textarea
         id="textarea-0"
-        placeholder="Type here.."
+        placeholder="Type mjml here.. (v1)"
         style="width: 100%; height: 50%"
       ></textarea>
       <div id="div-0"></div>
@@ -49,8 +49,14 @@
       function sendDatatoMC() {
         textAreaContent = document.getElementById("textarea-0").value;
         sdk.setSuperContent(textAreaContent);
-        sdk.setContent(textAreaContent);
+        //sdk.setContent(textAreaContent);
         sdk.setData(textAreaContent);
+        var mjmlRenderedContent = renderMjml(textAreaContent);
+        sdk.setContent(mjmlRenderedContent);
+      }
+
+      function renderMjml(textAreaContent) {
+          return textAreaContent + " Rendered."
       }
       //Event Listener
       document.getElementById("textarea-0").addEventListener(
