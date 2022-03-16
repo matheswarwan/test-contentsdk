@@ -9,7 +9,7 @@
       ></textarea>
       <div id="div-0"></div>
     </div>
-
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script src="blocksdk.js"></script>
     <script>
       const debounce = (fn, delay) => {
@@ -48,15 +48,52 @@
 
       function sendDatatoMC() {
         textAreaContent = document.getElementById("textarea-0").value;
-        sdk.setSuperContent(textAreaContent + "Super Content");
-        sdk.setContent(textAreaContent + " Content ");
-        sdk.setData(textAreaContent + " Data ");
+        
+        sdk.setContent(textAreaContent);
+        sdk.setData(textAreaContent);
         var mjmlRenderedContent = renderMjml(textAreaContent);
-        //sdk.setContent(mjmlRenderedContent);
+        sdk.setSuperContent(mjmlRenderedContent);
       }
 
       function renderMjml(textAreaContent) {
-          return textAreaContent + " Rendered."
+          var url = "https://api.mjml.io/v1/render";
+          var payload = { 
+            "mjml":textAreaContent
+               }
+          var username = "ac431a44-da36-4958-8d64-e85eff349881"
+          var password = "d702e374-3670-4d14-9dab-a23dfbe9ed07"
+          var authToken = "Basic " + btoa(username + ":" + password);
+          var headers = { "Authorization" : authToken }
+
+          console.log("Make post call to \n " + url )
+          console.log("payload \n " + payload )
+          console.log("username \n " + username )
+          console.log("password \n " + password )
+          console.log("authToken \n " + authToken )
+          console.log("headers \n " + headers )
+          axios({
+            method: 'post',
+            url: url,
+            data: payload,
+            headers : headers 
+          })
+          .then(result => {
+            console.log(result) //To see full result 
+            if (result.status == 200) {
+                console.log("HTML received")
+                console.log(result.data.html)
+                return result.data.html
+            } else {
+                console.log("HTML Not received");
+                console.log(result.data.errors)
+            }
+          })
+          .catch(result => {
+                console.log("HTML Not received");
+                console.log(result)
+          })
+
+        return textAreaContent + " Rendered."
       }
       //Event Listener
       document.getElementById("textarea-0").addEventListener(
