@@ -299,22 +299,22 @@
       tabs: ['stylingblock', {
         name: 'Mjml API config',
         key: 'mjmlAPIConfig',
-        url: '../mjmlAPIConfig.html'
+        url: 'https://test-contentsdk.herokuapp.com/mjmlAPIConfig.html'
       }],
     });
 
     sdk.getData(function (data) {
       if(data) { 
         //MJML data 
-        document.getElementById('highlighting-content').innerText = data; 
-        document.getElementById('editing').value = data; 
+        document.getElementById('highlighting-content').innerText = JSON.stringify(data); 
+        document.getElementById('editing').value = JSON.stringify(data); 
         console.log('Get Data : ' + JSON.stringify(data));
       }
     });
     sdk.getContent(function (data) {
       if (data) {
         //HTML content 
-        sdk.setSuperContent = data; 
+        sdk.setSuperContent = JSON.stringify(data); 
         console.log('Get Content : ' + JSON.stringify(data));
       }
     });
