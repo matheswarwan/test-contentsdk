@@ -306,8 +306,9 @@
     sdk.getData(function (data) {
       if(data) { 
         //MJML data 
-        document.getElementById('highlighting-content').innerText = JSON.stringify(data); 
-        document.getElementById('editing').value = JSON.stringify(data); 
+        //TODO: If data is empty object, {} - then skip it.
+        document.getElementById('highlighting-content').innerText = data.mjml; 
+        document.getElementById('editing').value = data.mjml; 
         console.log('Get Data : ' + JSON.stringify(data));
       }
     });
@@ -332,7 +333,7 @@
       var textAreaContent = document.getElementById("editing").value;
       var mjmlRenderedContent = '';
 
-      sdk.setData(textAreaContent);
+      sdk.setData({'mjml': textAreaContent});
 
       var url = "https://api.mjml.io/v1/render";
       var payload = {
@@ -359,10 +360,11 @@
           console.log(result) //To see full result 
           if (result.status == 200) {
             console.log("HTML received")
-            console.log(result.data.html)
+            //console.log(result.data.html)
             mjmlRenderedContent = result.data.html;
             sdk.setSuperContent(mjmlRenderedContent);
             sdk.setContent(mjmlRenderedContent);
+            sdk.setData({'mjml': textAreaContent, 'html': mjmlRenderedContent});
             return result.data.html
           } else {
             console.log("HTML Not received");
