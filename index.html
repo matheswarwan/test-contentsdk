@@ -335,7 +335,12 @@
 
       //sdk.setSuperContent(helloWorldmjml);
       sdk.setContent(helloWorldmjml);
-      sdk.setData({'mjml': helloWorldmjml, 'html': renderMjml() }); //MK TODO: might not be needed if renderMjml is directly called.
+      sdk.getData(function (data) {
+        data['mjml'] = helloWorldmjml;
+        data['html'] = renderMjml();
+        sdk.setData(data);  
+      });
+     //MK TODO: might not be needed if renderMjml is directly called.
             
     }
 
@@ -346,14 +351,22 @@
 
       //sdk.setSuperContent(mjmlStarWars);
       sdk.setContent(mjmlStarWars);
-      sdk.setData({'mjml': mjmlStarWars, 'html': renderMjml() }); //MK TODO: might not be needed if renderMjml is directly called.
+      sdk.getData(function (data) {
+        data['mjml'] = mjmlStarWars;
+        data['html'] = renderMjml()
+        sdk.setData(data);  
+      });
+       //MK TODO: might not be needed if renderMjml is directly called.
     }
 
     function renderMjml() {
       var textAreaContent = document.getElementById("editing").value;
       var mjmlRenderedContent = '';
 
-      sdk.setData({'mjml': textAreaContent});
+      sdk.getData(function (data) {
+        data['mjml'] = textAreaContent;
+        sdk.setData(data);  
+      });
 
       var url = "https://api.mjml.io/v1/render";
       var payload = {
@@ -384,7 +397,11 @@
             mjmlRenderedContent = result.data.html;
             sdk.setSuperContent(mjmlRenderedContent);
             sdk.setContent(mjmlRenderedContent);
-            sdk.setData({'mjml': textAreaContent, 'html': mjmlRenderedContent});
+            sdk.getData(function (data) {
+              data['mjml'] = textAreaContent;
+              data['html'] = mjmlRenderedContent;
+              sdk.setData(data);  
+            });
             //return result.data.html
             //Handle if MJML repsonse had any errors.
             console.log("MK - has this errors? " + result.data.errors.length)
