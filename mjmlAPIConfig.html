@@ -1,7 +1,29 @@
 <html>
-<head><title></title></head>
+
+<head>
+    <title></title>
+    <script src="blocksdk.js"></script>
+</head>
+
 <body>
-Username: <input type="text" id="username">
-Password: <input type="text" id="password">
+    Username: <input type="text" id="username" value="<your-mjml-api-value>"><br><br>
+    Password: <input type="text" id="password" value="<your-mjml-api-value>"><br><br>
+    <input type="button" value="Save" onclick="saveAPIDetails()">
 </body>
+<script>
+    var sdk = new window.sfdc.BlockSDK({
+            
+    });
+    function saveAPIDetails() { 
+        
+
+        sdk.setData(
+            {
+                'username':document.getElementById('username').value,
+                'password':document.getElementById('password').value
+        })
+
+        console.log(sdk.getData())
+    }
+</script>
 </html>
