@@ -349,18 +349,26 @@
         console.log('MK Debug - does this have API details - Get Data : ' + JSON.stringify(data));
       }
     });
+
+    sdk.getContent(function (content) {
+      console.log("354. Content in first get content " + content);
+      sdk.setContent(content, function (setContent) {
+        console.log("356. Content in first get content " + content);
+      });
+    });
+    
+/*
     sdk.getContent(function (data) {
+      sdk.setContent('353. HTML not available for preview...')
       if (data['html']) {
         //HTML content 
         console.log("Content in first super content " + JSON.stringify(data));
         //sdk.setSuperContent = JSON.stringify(data); 
         sdk.setContent(data['html']);
         console.log('Get Content : ' + JSON.stringify(data));
-      } else { 
-        sdk.setContent('HTML not available for preview...')
-      }
+      } 
     });
-
+*/
     sdk.getUserData(function (userData) {
       console.log('Get User Data : ' + JSON.stringify(userData));
     });
@@ -384,7 +392,7 @@
       sdk.getContent(function(data){
         data['mjml'] = mjmlRenderedContent
         sdk.setContent('Preview not available. Please click on render to generate HTML preview.'); //Always set only html in setcontent //MKTODO : try set content instead supercontent 
-        console.log("Content data in render function " + data);
+        console.log("1. Content data in render function " + data);
       });
       sdk.getData(function (data) {
         data['mjml'] = helloWorldmjml;
@@ -490,7 +498,7 @@
       sdk.getContent(function(data){
         data['mjml'] = mjmlStarWars
         sdk.setContent('Preview not available. Please click on render to generate HTML preview.'); //Always set only html in setcontent //MKTODO : try set content instead supercontent 
-        console.log("Content data in render function " + data);
+        console.log("2. Content data in render function " + data);
       });
       sdk.getData(function (data) {
         data['mjml'] = mjmlStarWars;
@@ -508,8 +516,10 @@
       sdk.getData(function (data) {
         data['mjml'] = textAreaContent;
         sdk.setData(data);  
+        sdk.setContent('Api call in progress. Please wait for preview..')
       });
 
+      
       var url = "https://api.mjml.io/v1/render";
       var payload = {
         "mjml": textAreaContent
@@ -542,7 +552,7 @@
             sdk.getContent(function(data){
               data['html'] = mjmlRenderedContent
               sdk.setContent(data['html']); //Always set only html in setcontent //MKTODO : try set content instead supercontent 
-              console.log("Content data in render function " + data);
+              console.log("3. Content data in render function " + data);
             });
 
             sdk.getData(function (data) {
