@@ -300,7 +300,7 @@
     };
 
     var sdk = new window.sfdc.BlockSDK({
-      blockEditorWidth: 600,
+      blockEditorWidth: 849,
       tabs: [ {
         name: 'Code Snippets',
         key: 'codeSnippets',
@@ -315,8 +315,13 @@
       ,'stylingblock'],
     });
 
+
+
     /* Reset Everything */ 
     document.getElementById('errorMsg').innerHTML =  "" //"error 1 <br>error 1 <br>>error 1 <br>>error 1 <br>>error 1 <br>>error 1 <br>>";//mk123
+    sdk.setBlockEditorWidth(849, function(data) {
+      console.log("Block width set to 849. Data received " + data);
+    })
 
     var username //= "ac431a44-da36-4958-8d64-e85eff349881"
     var password //= "d702e374-3670-4d14-9dab-a23dfbe9ed07"
@@ -520,12 +525,15 @@
             //console.log(result.data.html)
             mjmlRenderedContent = result.data.html;
             console.log("HTML content to be rendered " + result.data.html);
-            sdk.setSuperContent(mjmlRenderedContent, function(data) {
+            sdk.setSuperContent(result.data.html, function(data) {
               console.log("Content stored in super content = " + JSON.stringify(data));
             });
-            //sdk.getContent(function(data){
-              sdk.setContent(mjmlRenderedContent);
-            //});
+            sdk.getContent(function(data){
+              data['html'] = mjmlRenderedContent
+              sdk.setContent(data); //MKTODO : try set content instead supercontent 
+              console.log("Content data after setting it as json " + data);
+            });
+
             sdk.getData(function (data) {
               data['mjml'] = textAreaContent;
               data['html'] = mjmlRenderedContent;
