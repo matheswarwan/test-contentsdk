@@ -335,6 +335,7 @@
     sdk.getContent(function (data) {
       if (data) {
         //HTML content 
+        console.log("Content in first super content " + JSON.stringify(data));
         sdk.setSuperContent = JSON.stringify(data); 
         console.log('Get Content : ' + JSON.stringify(data));
       }
