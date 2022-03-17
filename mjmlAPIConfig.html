@@ -15,15 +15,17 @@
             
     });
     function saveAPIDetails() { 
+        console.log("clicked");
+
+        sdk.getData(function (data) {
+            console.log("get data received by API page - " + JSON.stringify(data));
+            data['username'] = document.getElementById('username').value;
+            data['password'] = document.getElementById('password').value;
+            sdk.setData(data);
+            console.log("username & pwd appended - " + JSON.stringify(data));
+          });
+
         
-
-        sdk.setData(
-            {
-                'username':document.getElementById('username').value,
-                'password':document.getElementById('password').value
-        })
-
-        console.log(sdk.getData())
     }
 </script>
 </html>
