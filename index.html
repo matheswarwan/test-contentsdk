@@ -305,6 +305,22 @@
         url: 'https://test-contentsdk.herokuapp.com/mjmlAPIConfig.html'
       }],
     });
+
+    var username //= "ac431a44-da36-4958-8d64-e85eff349881"
+    var password //= "d702e374-3670-4d14-9dab-a23dfbe9ed07"
+      
+    sdk.getData(function(data){
+      console.log("Retreiving uname & pwd")
+      if(data['username'] && data['password']) {
+        username = data['username']
+        password = data['password']
+      } else {
+        document.getElementById('errorMsg').innerHTML = "Please enter/ save API details";
+        console.log("Please enter/ save API details");
+        throw 'API details unavailable';
+      }
+    });
+
     
     //get API details on load 
     sdk.getData(function (data) {
@@ -372,11 +388,9 @@
       var payload = {
         "mjml": textAreaContent
       }
-      var username = "ac431a44-da36-4958-8d64-e85eff349881"
-      var password = "d702e374-3670-4d14-9dab-a23dfbe9ed07"
       var authToken = "Basic " + btoa(username + ":" + password);
       var headers = { "Authorization": authToken }
-
+      
       console.log("Make post call to \n " + url)
       console.log("payload MJML \n " + payload["mjml"])
       console.log("username \n " + username)
