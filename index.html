@@ -285,14 +285,20 @@
 
       var sdk = new window.sfdc.BlockSDK({
         blockEditorWidth: 600,
-        tabs: ["stylingblock"],
+        tabs: ['stylingblock',{
+          name: 'Mjml API config',
+          key: 'mjmlAPIConfig',
+          url: 'https://www.google.com'
+        }],
       });
 
       sdk.getData(function (data) {
+        console.log('Get Data : ' + JSON.stringify(data));
       });
       sdk.getContent(function (data) {
         if (data) {
           document.getElementById("editing").value = data;
+          console.log('Get Content : ' + JSON.stringify(data));
         }
       });
 
@@ -322,7 +328,7 @@
       function renderMjml() {
           var textAreaContent = document.getElementById("editing").value;
           var mjmlRenderedContent = '';
-          sdk.setContent(textAreaContent);
+          
           sdk.setData(textAreaContent);
 
           var url = "https://api.mjml.io/v1/render";
@@ -353,6 +359,7 @@
                 console.log(result.data.html)
                 mjmlRenderedContent = result.data.html;
                 sdk.setSuperContent(mjmlRenderedContent);
+                sdk.setContent(mjmlRenderedContent);
                 return result.data.html
             } else {
                 console.log("HTML Not received");
