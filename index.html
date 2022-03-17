@@ -350,7 +350,7 @@
       document.getElementById('editing').value = helloWorldmjml;
 
       //sdk.setSuperContent(helloWorldmjml);
-      sdk.setContent(helloWorldmjml);
+      sdk.setContent(helloWorldmjml); //mk TODO - this overwrites content. Handle this properly. 
       sdk.getData(function (data) {
         data['mjml'] = helloWorldmjml;
         data['html'] = renderMjml();
@@ -409,8 +409,12 @@
             console.log("HTML received")
             //console.log(result.data.html)
             mjmlRenderedContent = result.data.html;
-            sdk.setSuperContent(mjmlRenderedContent);
-            sdk.setContent(mjmlRenderedContent);
+            sdk.setSuperContent(mjmlRenderedContent, function(data) {
+              console.log("Content stored in super content = " + JSON.stringify(data));
+            });
+            //sdk.getContent(function(data){
+              sdk.setContent(mjmlRenderedContent);
+            //});
             sdk.getData(function (data) {
               data['mjml'] = textAreaContent;
               data['html'] = mjmlRenderedContent;
