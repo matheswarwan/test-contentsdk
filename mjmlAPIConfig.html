@@ -10,6 +10,7 @@
 
     <div class="w-full max-w-xs">
         <form class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+            <div class="text-center text-green-700 text-sm font-bold mb-2" id='info'></div>
           <div class="mb-4">
             <label class="block text-gray-700 text-sm font-bold mb-2" for="username">
               Username
@@ -43,13 +44,15 @@
     });
     function saveAPIDetails() { 
         console.log("clicked");
-
+        document.getElementById('info').innerHTML = "Saving.."
         sdk.getData(function (data) {
             console.log("get data received by API page - " + JSON.stringify(data));
             data['username'] = document.getElementById('username').value;
             data['password'] = document.getElementById('password').value;
             sdk.setData(data);
+            document.getElementById('info').innerHTML = "API Details Saved."
             console.log("username & pwd appended - " + JSON.stringify(data));
+            
           });
 
         
