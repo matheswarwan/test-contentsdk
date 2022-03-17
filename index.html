@@ -350,11 +350,14 @@
       }
     });
     sdk.getContent(function (data) {
-      if (data) {
+      if (data['html']) {
         //HTML content 
         console.log("Content in first super content " + JSON.stringify(data));
-        sdk.setSuperContent = JSON.stringify(data); 
+        //sdk.setSuperContent = JSON.stringify(data); 
+        sdk.setContent(data['html']);
         console.log('Get Content : ' + JSON.stringify(data));
+      } else { 
+        sdk.setContent('HTML not available for preview...')
       }
     });
 
@@ -378,7 +381,11 @@
       document.getElementById('editing').value = helloWorldmjml;
 
       //sdk.setSuperContent(helloWorldmjml);
-      sdk.setContent(helloWorldmjml); //mk TODO - this overwrites content. Handle this properly. 
+      sdk.getContent(function(data){
+        data['mjml'] = mjmlRenderedContent
+        sdk.setContent('Preview not available. Please click on render to generate HTML preview.'); //Always set only html in setcontent //MKTODO : try set content instead supercontent 
+        console.log("Content data in render function " + data);
+      });
       sdk.getData(function (data) {
         data['mjml'] = helloWorldmjml;
         data['html'] = renderMjml();
@@ -480,7 +487,11 @@
       document.getElementById('editing').value = mjmlStarWars;
 
       //sdk.setSuperContent(mjmlStarWars);
-      sdk.setContent(mjmlStarWars);
+      sdk.getContent(function(data){
+        data['mjml'] = mjmlStarWars
+        sdk.setContent('Preview not available. Please click on render to generate HTML preview.'); //Always set only html in setcontent //MKTODO : try set content instead supercontent 
+        console.log("Content data in render function " + data);
+      });
       sdk.getData(function (data) {
         data['mjml'] = mjmlStarWars;
         data['html'] = renderMjml()
@@ -525,13 +536,13 @@
             //console.log(result.data.html)
             mjmlRenderedContent = result.data.html;
             console.log("HTML content to be rendered " + result.data.html);
-            sdk.setSuperContent(result.data.html, function(data) {
+            /*sdk.setSuperContent(result.data.html, function(data) {
               console.log("Content stored in super content = " + JSON.stringify(data));
-            });
+            });*/
             sdk.getContent(function(data){
               data['html'] = mjmlRenderedContent
-              sdk.setContent(data); //MKTODO : try set content instead supercontent 
-              console.log("Content data after setting it as json " + data);
+              sdk.setContent(data['html']); //Always set only html in setcontent //MKTODO : try set content instead supercontent 
+              console.log("Content data in render function " + data);
             });
 
             sdk.getData(function (data) {
