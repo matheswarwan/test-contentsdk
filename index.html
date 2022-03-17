@@ -263,8 +263,9 @@
 </head>
 
 <body>
+<div style="width: 80%; height: 80%" >
   <div id="textarea">
-    <textarea style="width: 80%; height: 80%" placeholder="Enter MJML Source Code" id="editing" spellcheck="true"
+    <textarea placeholder="Enter MJML Source Code" id="editing" spellcheck="true"
       oninput="update(this.value); sync_scroll(this);" onscroll="sync_scroll(this);"
       onkeydown="check_tab(this, event);"></textarea>
     <pre style="width: 80%; height: 80%" id="highlighting" aria-hidden="true">
@@ -273,12 +274,13 @@
         </pre>
   </div>
   <div style="position: absolute; bottom: 5px">
-    <div id="errorMsg" style="color:red"></div>
+    <div id="errorMsg" style="color:red" > </div> <!-- style="position: absolute; bottom: 50px; color:red; overflow: auto; overflow-y: scroll; max-height:50px ;max-width:80%;" >errors -->
     <!-- <div id="div-0"></div> -->
     <input type="button" value="Render" id="renderBtn" />
     <input type="button" value="MJML Hello world" id="demoMjml" onclick="mjmlHelloWorld()" />
     <input type="button" value="Starwars Template" id="starwarsMjml" onclick="mjmlStarWarsTemplate()" />
   </div>
+</div>
   <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
   <script src="blocksdk.js"></script>
   <script>
@@ -309,11 +311,12 @@
         key: 'mjmlAPIConfig',
         url: 'https://test-contentsdk.herokuapp.com/mjmlAPIConfig.html'
       }
+      ,'htmlblock'
       ,'stylingblock'],
     });
 
     /* Reset Everything */ 
-    document.getElementById('errorMsg').innerHTML = "";
+    document.getElementById('errorMsg').innerHTML =  "" //"error 1 <br>error 1 <br>>error 1 <br>>error 1 <br>>error 1 <br>>error 1 <br>>";//mk123
 
     var username //= "ac431a44-da36-4958-8d64-e85eff349881"
     var password //= "d702e374-3670-4d14-9dab-a23dfbe9ed07"
