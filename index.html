@@ -263,28 +263,29 @@
 </head>
 
 <body>
-<div style="width: 80%; height: 80%" >
-  <div id="textarea">
-    <textarea placeholder="Enter MJML Source Code" id="editing" spellcheck="true"
-      oninput="update(this.value); sync_scroll(this);" onscroll="sync_scroll(this);"
-      onkeydown="check_tab(this, event);"></textarea>
-    <pre style="width: 80%; height: 80%" id="highlighting" aria-hidden="true">
+  <div style="width: 80%; height: 80%">
+    <div id="textarea">
+      <textarea placeholder="Enter MJML Source Code" id="editing" spellcheck="true"
+        oninput="update(this.value); sync_scroll(this);" onscroll="sync_scroll(this);"
+        onkeydown="check_tab(this, event);"></textarea>
+      <pre style="width: 80%; height: 80%" id="highlighting" aria-hidden="true">
             <code class="language-markup" id="highlighting-content">
             </code>
         </pre>
+    </div>
+    <div style="position: absolute; bottom: 5px">
+      <div id="errorMsg" style="color:red"> </div>
+      <!-- style="position: absolute; bottom: 50px; color:red; overflow: auto; overflow-y: scroll; max-height:50px ;max-width:80%;" >errors -->
+      <!-- <div id="div-0"></div> -->
+      <input type="button" value="Render" id="renderBtn" />
+      <input type="button" value="MJML Hello world" id="demoMjml" onclick="mjmlHelloWorld()" />
+      <input type="button" value="Starwars Template" id="starwarsMjml" onclick="mjmlStarWarsTemplate()" />
+    </div>
   </div>
-  <div style="position: absolute; bottom: 5px">
-    <div id="errorMsg" style="color:red" > </div> <!-- style="position: absolute; bottom: 50px; color:red; overflow: auto; overflow-y: scroll; max-height:50px ;max-width:80%;" >errors -->
-    <!-- <div id="div-0"></div> -->
-    <input type="button" value="Render" id="renderBtn" />
-    <input type="button" value="MJML Hello world" id="demoMjml" onclick="mjmlHelloWorld()" />
-    <input type="button" value="Starwars Template" id="starwarsMjml" onclick="mjmlStarWarsTemplate()" />
-  </div>
-</div>
   <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
   <script src="blocksdk.js"></script>
   <script>
-    
+
     var textAreaContent;
 
     const debounce = (fn, delay) => {
@@ -301,34 +302,64 @@
 
     var sdk = new window.sfdc.BlockSDK({
       blockEditorWidth: 849,
-      tabs: [ {
+      tabs: [{
         name: 'Code Snippets',
         key: 'codeSnippets',
         url: 'https://test-contentsdk.herokuapp.com/MjmlCodeSnippets.html'
       }
-      ,{
+        , {
         name: 'API Details',
         key: 'mjmlAPIConfig',
         url: 'https://test-contentsdk.herokuapp.com/mjmlAPIConfig.html'
       }
-      ,'htmlblock'
-      ,'stylingblock'],
+        , 'htmlblock'
+        , 'stylingblock'],
     });
 
 
 
-    /* Reset Everything */ 
-    document.getElementById('errorMsg').innerHTML =  "" //"error 1 <br>error 1 <br>>error 1 <br>>error 1 <br>>error 1 <br>>error 1 <br>>";//mk123
-    sdk.setBlockEditorWidth(849, function(data) {
+    /* Reset Everything */
+    document.getElementById('errorMsg').innerHTML = "" //"error 1 <br>error 1 <br>>error 1 <br>>error 1 <br>>error 1 <br>>error 1 <br>>";//mk123
+    sdk.setBlockEditorWidth(849, function (data) {
       console.log("Block width set to 849. Data received " + data);
     })
 
     var username //= "ac431a44-da36-4958-8d64-e85eff349881"
     var password //= "d702e374-3670-4d14-9dab-a23dfbe9ed07"
-      
-    sdk.getData(function(data){
+
+    sdk.getContent(function (content) {
+      console.log("354. Content in first get content " + content);
+      if (content) {
+        sdk.setContent(content, function (setContent) {
+          console.log("357. Content Found in first get content " + content);
+        });
+      } else {
+        sdk.setContent('356. No html available to preview', function (setContent) { //if no html found, check if getdata has the value 
+          sdk.getData(function (data) {
+            if (data['html']) {
+              sdk.setContent(data['html'])
+            }
+            else {
+              sdk.setContent('342. No html found in data also... :D ')
+            }
+          });
+          console.log("361. Content NOT FOUND in first get content " + content);
+        });
+      }
+
+    });
+
+    sdk.getData(function (data) {
+      if (!isEmptyObject(data) && data['mjml']) {
+        //MJML data 
+        //TODO: If data is empty object, {} - then skip it.
+        document.getElementById('highlighting-content').innerText = data.mjml;
+        document.getElementById('editing').value = data.mjml;
+        console.log('MK Debug - does this have API details - Get Data : ' + JSON.stringify(data));
+      }
+
       console.log("Retreiving uname & pwd")
-      if(data['username'] && data['password']) {
+      if (data['username'] && data['password']) {
         username = data['username']
         password = data['password']
       } else {
@@ -338,51 +369,13 @@
       }
     });
 
-    
-    //get API details on load 
-    sdk.getData(function (data) {
-      if(!isEmptyObject(data)) { 
-        //MJML data 
-        //TODO: If data is empty object, {} - then skip it.
-        document.getElementById('highlighting-content').innerText = data.mjml; 
-        document.getElementById('editing').value = data.mjml; 
-        console.log('MK Debug - does this have API details - Get Data : ' + JSON.stringify(data));
-      }
-    });
-
-    sdk.getContent(function (content) {
-      console.log("354. Content in first get content " + content);
-      if(content) { 
-        sdk.setContent('356. No html available to preview', function (setContent) {
-          console.log("356. Content in first get content " + content);
-        });
-      }else {
-        sdk.setContent(content, function (setContent) {
-          console.log("356. Content in first get content " + content);
-        });
-      }
-      
-    });
-    
-/*
-    sdk.getContent(function (data) {
-      sdk.setContent('353. HTML not available for preview...')
-      if (data['html']) {
-        //HTML content 
-        console.log("Content in first super content " + JSON.stringify(data));
-        //sdk.setSuperContent = JSON.stringify(data); 
-        sdk.setContent(data['html']);
-        console.log('Get Content : ' + JSON.stringify(data));
-      } 
-    });
-*/
     sdk.getUserData(function (userData) {
       console.log('Get User Data : ' + JSON.stringify(userData));
     });
 
     function mjmlHelloWorld() {
-      var helloWorldmjml = 
-`<mjml>
+      var helloWorldmjml =
+        `<mjml>
 <mj-body>
   <mj-section>
     <mj-column>
@@ -396,23 +389,23 @@
       document.getElementById('editing').value = helloWorldmjml;
 
       //sdk.setSuperContent(helloWorldmjml);
-      sdk.getContent(function(data){
-        data['mjml'] = mjmlRenderedContent
+      sdk.getContent(function (data) {
+        data['mjml'] = helloWorldmjml;
         sdk.setContent('401. Preview not available. Please click on render to generate HTML preview.'); //Always set only html in setcontent //MKTODO : try set content instead supercontent 
         console.log("401. Content data in render function " + data);
       });
       sdk.getData(function (data) {
         data['mjml'] = helloWorldmjml;
         data['html'] = renderMjml();
-        sdk.setData(data);  
+        sdk.setData(data);
       });
-     //MK TODO: might not be needed if renderMjml is directly called.
-            
+      //MK TODO: might not be needed if renderMjml is directly called.
+
     }
 
     function mjmlStarWarsTemplate() {
-      var mjmlStarWars = 
-`<mjml>
+      var mjmlStarWars =
+        `<mjml>
   <mj-head>
     <mj-title>These are the Droids you're looking for</mj-title>
   </mj-head>
@@ -502,7 +495,7 @@
       document.getElementById('editing').value = mjmlStarWars;
 
       //sdk.setSuperContent(mjmlStarWars);
-      sdk.getContent(function(data){
+      sdk.getContent(function (data) {
         data['mjml'] = mjmlStarWars
         sdk.setContent('507. Preview not available. Please click on render to generate HTML preview.'); //Always set only html in setcontent //MKTODO : try set content instead supercontent 
         console.log("508. Content data in render function " + data);
@@ -510,9 +503,9 @@
       sdk.getData(function (data) {
         data['mjml'] = mjmlStarWars;
         data['html'] = renderMjml()
-        sdk.setData(data);  
+        sdk.setData(data);
       });
-       //MK TODO: might not be needed if renderMjml is directly called.
+      //MK TODO: might not be needed if renderMjml is directly called.
     }
 
     function renderMjml() {
@@ -522,24 +515,24 @@
 
       sdk.getData(function (data) {
         data['mjml'] = textAreaContent;
-        sdk.setData(data);  
+        sdk.setData(data);
         sdk.setContent('526. Api call in progress. Please wait for preview..'); //Clear the content and set value
       });
 
-      
+
       var url = "https://api.mjml.io/v1/render";
       var payload = {
         "mjml": textAreaContent
       }
       var authToken = "Basic " + btoa(username + ":" + password);
       var headers = { "Authorization": authToken }
-      
+
       console.log("Make post call to \n " + url)
-      console.log("payload MJML \n " + payload["mjml"])
+      /* console.log("payload MJML \n " + payload["mjml"])
       console.log("username \n " + username)
       console.log("password \n " + password)
       console.log("authToken \n " + authToken)
-      console.log("headers \n " + headers)
+      console.log("headers \n " + headers) */
       axios({
         method: 'post',
         url: url,
@@ -556,7 +549,7 @@
             /*sdk.setSuperContent(result.data.html, function(data) {
               console.log("Content stored in super content = " + JSON.stringify(data));
             });*/
-            sdk.getContent(function(content){
+            sdk.getContent(function (content) {
               sdk.setContent(result.data.html); //Always set only html in setcontent //MKTODO : try set content instead supercontent 
               console.log("554. Content in render function " + result.data.html);
             });
@@ -564,15 +557,15 @@
             sdk.getData(function (data) {
               data['mjml'] = textAreaContent;
               data['html'] = mjmlRenderedContent;
-              sdk.setData(data);  
+              sdk.setData(data);
+              console.log("568 . content in render function for getdata " + data);
             });
             //return result.data.html
             //Handle if MJML repsonse had any errors.
-            console.log("MK - has this errors? " + result.data.errors.length)
-            if(result.data.errors.length > 0) {
+            if (result.data.errors.length > 0) {
               var errs = result.data.errors;
               var errMsg;
-              for(e in errs) {
+              for (e in errs) {
                 errMsg += errs[e].formattedMessage + "\n";
                 console.log(errMsg);
                 document.getElementById('errorMsg').innerText = errMsg;
@@ -581,20 +574,20 @@
           } else {
             console.log("HTML Not received");
             console.log(result.data.errors)
-            
+
             sdk.getData(function (data) {
-              if(data['html']) { 
-                sdk.setContent(data['html']); 
+              if (data['html']) {
+                sdk.setContent(data['html']);
               } else {
-                sdk.setContent('589 . HTML not available to show a preview'); 
+                sdk.setContent('589 . HTML not available to show a preview');
               }
-              sdk.setData(data);  
+              sdk.setData(data);
             });
           }
         })
         .catch(result => {
           console.log("Error rendering");
-          console.log(result.message); 
+          console.log(result.message);
           console.log(JSON.stringify(result));
           console.log(result);
           document.getElementById('errorMsg').innerText = result.message;
@@ -628,7 +621,7 @@
       "/4000) " +
       (4000 - document.getElementById("editing").value.length) +
       " characters left." +
-      "</font>"; */ 
+      "</font>"; */
   </script>
 
 
