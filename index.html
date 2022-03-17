@@ -409,6 +409,7 @@
             console.log("HTML received")
             //console.log(result.data.html)
             mjmlRenderedContent = result.data.html;
+            console.log("HTML content to be rendered " + result.data.html);
             sdk.setSuperContent(mjmlRenderedContent, function(data) {
               console.log("Content stored in super content = " + JSON.stringify(data));
             });
@@ -441,6 +442,7 @@
           console.log("Error rendering");
           console.log(result.message); 
           console.log(JSON.stringify(result));
+          console.log(result);
           document.getElementById('errorMsg').innerText = result.message;
 
         })
