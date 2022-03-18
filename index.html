@@ -310,17 +310,20 @@
       lineNumbers: true,
       mode: "xml",
       htmlMode: true, 
+      lineSeparator: null,
       theme: "default",
       indentUnit: 2,
       tabSize: 4,
       indentWithTabs: true,
       lineWrapping: true, 
+      tabindex: 1,
       autofocus: true,
       gutter: true,
-      lineWrapping: true  
+      lineWrapping: true,
+      autoRefresh:true
     });
     myCodeMirror.setSize(null,1000);
-
+    myCodeMirror.refresh();
   </script>
   <script>
 
