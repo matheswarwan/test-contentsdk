@@ -142,7 +142,7 @@
 
 
     /* Reset Everything */
-    document.getElementById('errorMsg').innerHTML = ''; // "error 1 <br>error 1 <br>>error 1 <br>>error 1 <br>>error 1 <br>>error 1 <br>>";//mk123
+    document.getElementById('errorMsg').innerHTML = ''; 
     sdk.setBlockEditorWidth(500, function (data) {
       consoleprint(debug, "109. Block width set to 500. Data received " + data);
     })
@@ -216,7 +216,7 @@
       //sdk.setSuperContent(helloWorldmjml);
       sdk.getContent(function (data) {
         data['mjml'] = helloWorldmjml;
-        sdk.setContent('401. Preview not available. Please click on render to generate HTML preview.'); //Always set only html in setcontent //MKTODO : try set content instead supercontent 
+        sdk.setContent('401. Preview not available. Please click on render to generate HTML preview.'); //Always set only html in setcontent 
         consoleprint(debug, "401. Content data in render function " + data);
       });
       sdk.getData(function (data) {
@@ -224,8 +224,6 @@
         data['html'] = renderMjml();
         sdk.setData(data);
       });
-      //MK TODO: might not be needed if renderMjml is directly called.
-
     }
 
     function mjmlStarWarsTemplate() {
@@ -321,7 +319,7 @@
       //sdk.setSuperContent(mjmlStarWars);
       sdk.getContent(function (data) {
         data['mjml'] = mjmlStarWars
-        sdk.setContent('507. Preview not available. Please click on render to generate HTML preview.'); //Always set only html in setcontent //MKTODO : try set content instead supercontent 
+        sdk.setContent('507. Preview not available. Please click on render to generate HTML preview.'); 
         consoleprint(debug, "508. Content data in render function " + data);
       });
       sdk.getData(function (data) {
@@ -329,7 +327,6 @@
         data['html'] = renderMjml()
         sdk.setData(data);
       });
-      //MK TODO: might not be needed if renderMjml is directly called.
     }
 
     function renderMjml() {
@@ -340,7 +337,7 @@
       sdk.getData(function (data) {
         data['mjml'] = textAreaContent;
         sdk.setData(data);
-        sdk.setContent('526. Api call in progress. Please wait for preview..'); //Clear the content and set value
+        sdk.setContent('<div style="font-size:12px;font-family:Arial">Api call in progress. Kindly wait for a preview.</div>'); //Clear the content and set value
       });
 
 
@@ -370,11 +367,8 @@
             //consoleprint(debug, result.data.html)
             mjmlRenderedContent = result.data.html;
             consoleprint(debug, "HTML content to be rendered " + result.data.html);
-            /*sdk.setSuperContent(result.data.html, function(data) {
-              consoleprint(debug, "Content stored in super content = " + JSON.stringify(data));
-            });*/
             sdk.getContent(function (content) {
-              sdk.setContent(result.data.html); //Always set only html in setcontent //MKTODO : try set content instead supercontent 
+              sdk.setContent(result.data.html); //Always set only html in setcontent 
               consoleprint(debug, "554. Content in render function " + result.data.html);
             });
 
@@ -389,9 +383,9 @@
             if (result.data.errors.length > 0) {
               var errs = result.data.errors;
 
-              errMsg = errs[0].line + "\t" + errs[0].message + "\n"; //To avoid 'undefined' from appended
+              errMsg = "Line #" + errs[0].line + "\t" + errs[0].message + "\n"; //To avoid 'undefined' from appended
               for (var e=1; e<errs.length; e++) {
-                errMsg += errs[e].line + "\t" + errs[e].message + "\n";
+                errMsg += "Line #" + errs[e].line + "\t" + errs[e].message + "\n";
                 consoleprint(debug, errs[e]);
               }
               document.getElementById('errorMsg').innerText = errMsg;
