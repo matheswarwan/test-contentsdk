@@ -8,6 +8,22 @@
 
 <body>
 
+<!-- setter.amp -->
+%%[
+
+Set @myAmpscriptVariable = "test"
+Output(concat('<br>Value in ampscript', @myAmpscriptVariable))
+]%%
+
+<!-- getter.ssjs -->
+<script runat="server" language="JavaScript">
+Platform.Load("core", "1.1.1");
+
+var temp = Variable.GetValue('@myAmpscriptVariable');
+Write('<br> Value in SSJS ' + temp)
+// temp now has the value "test"
+</script>
+
   <div class="w-full max-w-xs " style="width:800px; margin:0 auto; margin-top: 50px">
     <!-- <form class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4"> --> 
       <div class="text-center text-green-700 text-sm font-bold mb-2" id='info'></div>
