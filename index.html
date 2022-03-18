@@ -130,11 +130,11 @@
         key: 'codeSnippets',
         url: 'https://test-contentsdk.herokuapp.com/MjmlCodeSnippets.html'
       }
-        , {
+       /* , {
         name: 'API Details',
         key: 'mjmlAPIConfig',
         url: 'https://test-contentsdk.herokuapp.com/mjmlAPIConfig.html'
-      }
+      }*/
         , 'htmlblock'
         , 'stylingblock'],
     });
@@ -147,8 +147,8 @@
       consoleprint(debug, "109. Block width set to 500. Data received " + data);
     })
 
-    var username //= "ac431a44-da36-4958-8d64-e85eff349881"
-    var password //= "d702e374-3670-4d14-9dab-a23dfbe9ed07"
+    var username = "ac431a44-da36-4958-8d64-e85eff349881"
+    var password = "d702e374-3670-4d14-9dab-a23dfbe9ed07"
 
     sdk.getContent(function (content) {
       consoleprint(debug, "354. Content in first get content " + content);
@@ -178,17 +178,19 @@
         //TODO: If data is empty object, {} - then skip it.
         //document.getElementById('editing').value = data.mjml;
         myCodeMirror.setValue(data.mjml);
-        consoleprint(debug, 'MK Debug - does this have API details - Get Data : ' + JSON.stringify(data));
+        consoleprint(debug, 'does this have API details - Get Data : ' + JSON.stringify(data));
       }
 
       consoleprint(debug, "Retreiving uname & pwd")
-      if (data['username'] && data['password']) {
-        username = data['username']
-        password = data['password']
-      } else {
-        document.getElementById('errorMsg').innerHTML = "Please enter/ save API details";
-        consoleprint(debug, "Please enter/ save API details");
-        throw 'API details unavailable';
+      if(!username && !password) {
+        if (data['username'] && data['password']) {
+          username = data['username']
+          password = data['password']
+        } else {
+          document.getElementById('errorMsg').innerHTML = "Please enter/ save API details";
+          consoleprint(debug, "Please enter/ save API details");
+          throw 'API details unavailable';
+        }
       }
     });
 
