@@ -31,6 +31,29 @@
       font-size: 11px;
       border-radius: 3px;
     }
+    .alert {
+      background-color: 10px;
+      font-size: 12px;
+      border-radius: .25rem;
+      padding: 6px 21px 6px 34px;
+      min-width: rem(480px);
+      position: relative;
+      font-weight: 300;
+      border: none;
+      color: #a94442;
+      box-sizing: border-box;
+    }
+    .alertmessage {
+      margin: 0 10px;
+      border-top-left-radius: 0;
+      border-top-right-radius: 0;
+      font-size: 12px;
+      display: inline-block;
+      text-align: left;
+      word-break: break-word;
+      font-family: Arial;
+      box-sizing: border-box;
+    }
   </style>
 
 </head>
@@ -39,7 +62,7 @@
   <div style="width: 100%; height: 80%">
     <textarea style="width: 100%; height: 80%" placeholder="Enter MJML Source Code" id="editing" spellcheck="true"></textarea>
     <div style="padding-top: 25px; bottom: 5px">
-      <div id="errorMsg" style="color:red"> </div>
+      <div class="alert"  > <div class="alertmessage" id="errorMsg"></div> </div>
       <input class="btn" type="button" value="Render" id="renderBtn" />
       <input class="btn" type="button" value="MJML Hello world" style="float:right; margin:5px ;" id="demoMjml" onclick="mjmlHelloWorld()" /> 
       <input class="btn" type="button" value="Starwars Template" style="float:right; margin:5px ;" id="starwarsMjml" onclick="mjmlStarWarsTemplate()" />
@@ -72,6 +95,7 @@
   <script>
 
     var textAreaContent;
+    var errMsg;
 
     const debounce = (fn, delay) => {
       let timeOutID;
@@ -86,7 +110,7 @@
     };
 
     var sdk = new window.sfdc.BlockSDK({
-      blockEditorWidth: 849,
+      blockEditorWidth: 500,
       tabs: [{
         name: 'Code Snippets',
         key: 'codeSnippets',
@@ -104,9 +128,9 @@
 
 
     /* Reset Everything */
-    document.getElementById('errorMsg').innerHTML = "" //"error 1 <br>error 1 <br>>error 1 <br>>error 1 <br>>error 1 <br>>error 1 <br>>";//mk123
-    sdk.setBlockEditorWidth(849, function (data) {
-      console.log("Block width set to 849. Data received " + data);
+    document.getElementById('errorMsg').innerHTML = ''; // "error 1 <br>error 1 <br>>error 1 <br>>error 1 <br>>error 1 <br>>error 1 <br>>";//mk123
+    sdk.setBlockEditorWidth(500, function (data) {
+      console.log("109. Block width set to 500. Data received " + data);
     })
 
     var username //= "ac431a44-da36-4958-8d64-e85eff349881"
@@ -293,8 +317,7 @@
     }
 
     function renderMjml() {
-      document.getElementById('errorMsg').innerHTML = "";
-      //var textAreaContent = document.getElementById("editing").value; mk123
+      document.getElementById('errorMsg').innerHTML = '';
       var textAreaContent = myCodeMirror.getValue();
       var mjmlRenderedContent = '';
 
@@ -349,12 +372,13 @@
             //Handle if MJML repsonse had any errors.
             if (result.data.errors.length > 0) {
               var errs = result.data.errors;
-              var errMsg;
-              for (e in errs) {
+
+              errMsg = errs[0].formattedMessage + "\n"; //To avoid 'undefined' from appended
+              for (var e=1; e<errs.length; e++) {
                 errMsg += errs[e].formattedMessage + "\n";
-                console.log(errMsg);
-                document.getElementById('errorMsg').innerText = errMsg;
+                console.log(errs[e]);
               }
+              document.getElementById('errorMsg').innerText = errMsg;
             }
           } else {
             console.log("HTML Not received");
