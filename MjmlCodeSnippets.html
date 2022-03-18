@@ -190,7 +190,7 @@
                                           <tr>
                                             <td style="background:#fafafa;font-size:14px;font-family:Open Sans, Helvetica, Arial, sans-serif;line-height:1;color:#505050;padding:15px;">
                                               <span style="line-height:20px"> mj-accordion is an interactive MJML component to stack content in tabs, so the information is collapsed and only the titles are visible. Readers can interact by clicking on the tabs to reveal the content, providing a great experience on mobile devices where space is scarce. </span>
-                                              <textarea style="width:100%;height:100%; box-sizing: content-box">
+                                              <textarea style="width:100%;height:100%; box-sizing: content-box" rows=35 cols=50>
 <mjml>
 <mj-head>
 <mj-attributes>
@@ -260,7 +260,7 @@
                                           <tr>
                                             <td style="background:#fafafa;font-size:14px;font-family:Open Sans, Helvetica, Arial, sans-serif;line-height:1;color:#505050;padding:15px;">
                                               <span style="line-height:20px"> Displays a responsive image in your email. It is similar to the HTML <img /> tag. Note that if no width is provided, the image will use the parent column width. </span>
-                                              <textarea style="width:100%;height:100%; box-sizing: content-box">
+                                              <textarea style="width:100%;height:100%; box-sizing: content-box"  rows="10" cols="50">
 <mjml>
     <mj-body>
     <mj-section>
@@ -280,6 +280,212 @@
                                 </label>
                               </td>
                             </tr>
+                            <tr>
+                              <td style="padding:0px;">
+                                <label class="mj-accordion-element" style="font-size:13px;">
+                                  <!--[if !mso | IE]><!--><input class="mj-accordion-checkbox" type="checkbox" style="display:none;" />
+                                  <!--<![endif]-->
+                                  <div>
+                                    <div class="mj-accordion-title">
+                                      <table cell-spacing="0" cell-padding="0" style="width:100%;border-bottom:none;">
+                                        <tbody>
+                                          <tr>
+                                            <td style="width:100%;background-color:#ffffff;color:#031017;font-size:18px;font-family:Roboto, Open Sans, Helvetica, Arial, sans-serif;padding:15px;"> Body </td>
+                                            <!--[if !mso | IE]><!-->
+                                            <td class="mj-accordion-ico" style="padding:16px;background:#ffffff;vertical-align:middle;"><img src="https://i.imgur.com/Xvw0vjq.png" alt="+" class="mj-accordion-more" style="display:none;width:24px;height:24px;" /><img src="https://i.imgur.com/KKHenWa.png" alt="-" class="mj-accordion-less" style="display:none;width:24px;height:24px;" /></td>
+                                            <!--<![endif]-->
+                                          </tr>
+                                        </tbody>
+                                      </table>
+                                    </div>
+                                    <div class="mj-accordion-content">
+                                      <table cell-spacing="0" cell-padding="0" style="width:100%;border-bottom:none;">
+                                        <tbody>
+                                          <tr>
+                                            <td style="background:#fafafa;font-size:14px;font-family:Open Sans, Helvetica, Arial, sans-serif;line-height:1;color:#505050;padding:15px;">
+                                              <span style="line-height:20px"> This is the starting point of your email.
+                                              </span>
+                                              <textarea style="width:100%;height:100%; box-sizing: content-box"  rows="5" cols="50">
+<mjml>
+  <mj-body>
+    <!-- Your email goes here -->
+  </mj-body>
+</mjml>    
+                                            </td>
+                                          </tr>
+                                        </tbody>
+                                      </table>
+                                    </div>
+                                  </div>
+                                </label>
+                              </td>
+                            </tr> 
+                            <tr>
+                              <td style="padding:0px;">
+                                <label class="mj-accordion-element" style="font-size:13px;">
+                                  <!--[if !mso | IE]><!--><input class="mj-accordion-checkbox" type="checkbox" style="display:none;" />
+                                  <!--<![endif]-->
+                                  <div>
+                                    <div class="mj-accordion-title">
+                                      <table cell-spacing="0" cell-padding="0" style="width:100%;border-bottom:none;">
+                                        <tbody>
+                                          <tr>
+                                            <td style="width:100%;background-color:#ffffff;color:#031017;font-size:18px;font-family:Roboto, Open Sans, Helvetica, Arial, sans-serif;padding:15px;"> Include </td>
+                                            <!--[if !mso | IE]><!-->
+                                            <td class="mj-accordion-ico" style="padding:16px;background:#ffffff;vertical-align:middle;"><img src="https://i.imgur.com/Xvw0vjq.png" alt="+" class="mj-accordion-more" style="display:none;width:24px;height:24px;" /><img src="https://i.imgur.com/KKHenWa.png" alt="-" class="mj-accordion-less" style="display:none;width:24px;height:24px;" /></td>
+                                            <!--<![endif]-->
+                                          </tr>
+                                        </tbody>
+                                      </table>
+                                    </div>
+                                    <div class="mj-accordion-content">
+                                      <table cell-spacing="0" cell-padding="0" style="width:100%;border-bottom:none;">
+                                        <tbody>
+                                          <tr>
+                                            <td style="background:#fafafa;font-size:14px;font-family:Open Sans, Helvetica, Arial, sans-serif;line-height:1;color:#505050;padding:15px;">
+                                              <span style="line-height:20px"> The mjml-core package allows you to include external mjml files to build your email template.</span>
+                                              <textarea style="width:100%;height:100%; box-sizing: content-box" rows="21" cols="50">
+<!-- header.mjml -->
+<mj-section>
+  <mj-column>
+    <mj-text>This is a header</mj-text>
+  </mj-column>
+</mj-section>
+
+<!-- main.mjml -->
+<mjml>
+  <mj-body>
+    <mj-include path="./header.mjml" />
+  </mj-body>
+</mjml>
+
+<!-- main.mjml -->
+<mj-include path="./styles.css" type="css" />
+<mj-include path="./inline-styles.css" type="css" css-inline="inline" />
+
+<!-- main.mjml -->
+<mj-include path="./partial.html" type="html" />
+</textarea>
+                                            </td>
+                                          </tr>
+                                        </tbody>
+                                      </table>
+                                    </div>
+                                  </div>
+                                </label>
+                              </td>
+                            </tr> 
+                            <tr>
+                              <td style="padding:0px;">
+                                <label class="mj-accordion-element" style="font-size:13px;">
+                                  <!--[if !mso | IE]><!--><input class="mj-accordion-checkbox" type="checkbox" style="display:none;" />
+                                  <!--<![endif]-->
+                                  <div>
+                                    <div class="mj-accordion-title">
+                                      <table cell-spacing="0" cell-padding="0" style="width:100%;border-bottom:none;">
+                                        <tbody>
+                                          <tr>
+                                            <td style="width:100%;background-color:#ffffff;color:#031017;font-size:18px;font-family:Roboto, Open Sans, Helvetica, Arial, sans-serif;padding:15px;"> mj-attributes </td>
+                                            <!--[if !mso | IE]><!-->
+                                            <td class="mj-accordion-ico" style="padding:16px;background:#ffffff;vertical-align:middle;"><img src="https://i.imgur.com/Xvw0vjq.png" alt="+" class="mj-accordion-more" style="display:none;width:24px;height:24px;" /><img src="https://i.imgur.com/KKHenWa.png" alt="-" class="mj-accordion-less" style="display:none;width:24px;height:24px;" /></td>
+                                            <!--<![endif]-->
+                                          </tr>
+                                        </tbody>
+                                      </table>
+                                    </div>
+                                    <div class="mj-accordion-content">
+                                      <table cell-spacing="0" cell-padding="0" style="width:100%;border-bottom:none;">
+                                        <tbody>
+                                          <tr>
+                                            <td style="background:#fafafa;font-size:14px;font-family:Open Sans, Helvetica, Arial, sans-serif;line-height:1;color:#505050;padding:15px;">
+                                              <span style="line-height:20px"> Inside mj-attributes, a tag citing one MJML component (like mj-text; see example) overrides default settings for listed MJML attributes on the one component.<br>
+                            
+                                                An mj-all is like the above, but affects all MJML components via the one tag.<br>
+                                                
+                                                mj-class tags create a named group of MJML attributes you can apply to MJML components. To apply them, use mj-class="&lt;name&gt;".
+                                                
+                                                </span>
+                                              <textarea style="width:100%;height:100%; box-sizing: content-box" rows="19" cols="50">
+<mjml>
+  <mj-head>
+    <mj-attributes>
+      <mj-text padding="0" />
+      <mj-class name="blue" color="blue" />
+      <mj-class name="big" font-size="20px" />
+      <mj-all font-family="Arial" />
+    </mj-attributes>
+  </mj-head>
+  <mj-body>
+    <mj-section>
+      <mj-column>
+        <mj-text mj-class="blue big">
+          Hello World!
+        </mj-text>
+      </mj-column>
+    </mj-section>
+  </mj-body>
+</mjml>
+</textarea>
+                                            </td>
+                                          </tr>
+                                        </tbody>
+                                      </table>
+                                    </div>
+                                  </div>
+                                </label>
+                              </td>
+                            </tr> <tr>
+                              <td style="padding:0px;">
+                                <label class="mj-accordion-element" style="font-size:13px;">
+                                  <!--[if !mso | IE]><!--><input class="mj-accordion-checkbox" type="checkbox" style="display:none;" />
+                                  <!--<![endif]-->
+                                  <div>
+                                    <div class="mj-accordion-title">
+                                      <table cell-spacing="0" cell-padding="0" style="width:100%;border-bottom:none;">
+                                        <tbody>
+                                          <tr>
+                                            <td style="width:100%;background-color:#ffffff;color:#031017;font-size:18px;font-family:Roboto, Open Sans, Helvetica, Arial, sans-serif;padding:15px;"> mj-font                </td>
+                                            <!--[if !mso | IE]><!-->
+                                            <td class="mj-accordion-ico" style="padding:16px;background:#ffffff;vertical-align:middle;"><img src="https://i.imgur.com/Xvw0vjq.png" alt="+" class="mj-accordion-more" style="display:none;width:24px;height:24px;" /><img src="https://i.imgur.com/KKHenWa.png" alt="-" class="mj-accordion-less" style="display:none;width:24px;height:24px;" /></td>
+                                            <!--<![endif]-->
+                                          </tr>
+                                        </tbody>
+                                      </table>
+                                    </div>
+                                    <div class="mj-accordion-content">
+                                      <table cell-spacing="0" cell-padding="0" style="width:100%;border-bottom:none;">
+                                        <tbody>
+                                          <tr>
+                                            <td style="background:#fafafa;font-size:14px;font-family:Open Sans, Helvetica, Arial, sans-serif;line-height:1;color:#505050;padding:15px;">
+                                              <span style="line-height:20px"> This tag imports fonts. The tag has effect only if the template uses the font, too. The href attribute points to a hosted css file; that file contains a @font-face declaration. Example: https://fonts .googleapis.com/css?family=Raleway<br>More details - https://documentation.mjml.io/#mj-font
+                                                
+                                                </span>
+                                              <textarea style="width:100%;height:100%; box-sizing: content-box" rows=15 cols=50>
+<mjml>
+  <mj-head>
+    <mj-font name="Raleway"
+      href="https://fonts.googleapis.com/css?family=Raleway" />
+  </mj-head>
+  <mj-body>
+    <mj-section>
+      <mj-column>
+        <mj-text font-family="Raleway, Arial">
+          Hello World!
+        </mj-text>
+      </mj-column>
+      </mj-section>
+  </mj-body>
+</mjml>
+</textarea>
+                                            </td>
+                                          </tr>
+                                        </tbody>
+                                      </table>
+                                    </div>
+                                  </div>
+                                </label>
+                              </td>
+                            </tr>mk123
                           </tbody>
                         </table>
                       </td>
