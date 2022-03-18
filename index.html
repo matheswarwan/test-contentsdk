@@ -284,6 +284,28 @@
   <script src="CodeMirror/mode/htmlmixed/htmlmixed.js"></script>
   <script type="text/javascript" 
         src="CodeMirror/mode/xml/xml.js"></script>
+  <style>
+    .btn {
+      background: #0070d2;
+      color: #fff;
+      box-shadow: none;
+      outline: None;
+      display: inline-block;
+      margin-bottom: 0;
+      font-weight: regular;
+      text-align: center;
+      vertical-align: middle;
+      line-height: 1;
+      cursor: pointer;
+      background-image: none;
+      box-shadow: none;
+      white-space: nowrap;
+      border: 0;
+      padding: 5px 10px;
+      font-size: 11px;
+      border-radius: 3px;
+    }
+  </style>
 
 </head>
 
@@ -292,13 +314,13 @@
     <!-- <div id="textarea"> --> 
       <textarea style="width: 80%; height: 80%" placeholder="Enter MJML Source Code" id="editing" spellcheck="true"></textarea>
     <!-- <div> -->
-    <div style="position: absolute; bottom: 5px">
+    <div style="padding-top: 25px; bottom: 5px">
       <div id="errorMsg" style="color:red"> </div>
       <!-- style="position: absolute; bottom: 50px; color:red; overflow: auto; overflow-y: scroll; max-height:50px ;max-width:80%;" >errors -->
       <!-- <div id="div-0"></div> -->
-      <input type="button" value="Render" id="renderBtn" />
-      <input type="button" value="MJML Hello world" id="demoMjml" onclick="mjmlHelloWorld()" />
-      <input type="button" value="Starwars Template" id="starwarsMjml" onclick="mjmlStarWarsTemplate()" />
+      <input class="btn" type="button" value="Render" id="renderBtn" />
+      <input class="btn" type="button" value="MJML Hello world" style="float:right" id="demoMjml" onclick="mjmlHelloWorld()" />
+      <input class="btn" type="button" value="Starwars Template" style="float:right" id="starwarsMjml" onclick="mjmlStarWarsTemplate()" />
     </div>
   </div>
   <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
