@@ -54,13 +54,26 @@
       font-family: Arial;
       box-sizing: border-box;
     }
+    textarea
+    {
+      width:100%;
+    }
+    .textwrapper
+    {
+      border:1px solid #999999;
+      margin:5px 0;
+      padding:3px;
+    }
+
   </style>
 
 </head>
 
 <body>
   <div style="width: 100%; height: 80%">
-    <textarea style="width: 100%; height: 80%" placeholder="Enter MJML Source Code" id="editing" spellcheck="true"></textarea>
+    <div class="textwrapper">
+      <textarea style="width: 100%; height: 80%" placeholder="Enter MJML Source Code" id="editing" spellcheck="true"></textarea>
+    </div>
     <div style="padding-top: 25px; bottom: 5px">
       <div class="alert"  > <div class="alertmessage" id="errorMsg"></div> </div>
       <input class="btn" type="button" value="Render" id="renderBtn" />
@@ -89,13 +102,14 @@
       lineWrapping: true,
       autoRefresh:true
     });
-    myCodeMirror.setSize(null,500);
+    myCodeMirror.setSize("100%", "100%");
     myCodeMirror.refresh();
   </script>
   <script>
 
     var textAreaContent;
     var errMsg;
+    var debug=true;
 
     const debounce = (fn, delay) => {
       let timeOutID;
@@ -130,17 +144,17 @@
     /* Reset Everything */
     document.getElementById('errorMsg').innerHTML = ''; // "error 1 <br>error 1 <br>>error 1 <br>>error 1 <br>>error 1 <br>>error 1 <br>>";//mk123
     sdk.setBlockEditorWidth(500, function (data) {
-      console.log("109. Block width set to 500. Data received " + data);
+      consoleprint(debug, "109. Block width set to 500. Data received " + data);
     })
 
     var username //= "ac431a44-da36-4958-8d64-e85eff349881"
     var password //= "d702e374-3670-4d14-9dab-a23dfbe9ed07"
 
     sdk.getContent(function (content) {
-      console.log("354. Content in first get content " + content);
+      consoleprint(debug, "354. Content in first get content " + content);
       if (content) {
         sdk.setContent(content, function (setContent) {
-          console.log("357. Content Found in first get content " + content);
+          consoleprint(debug, "357. Content Found in first get content " + content);
         });
       } else {
         sdk.setContent('356. No html available to preview', function (setContent) { //if no html found, check if getdata has the value 
@@ -152,7 +166,7 @@
               sdk.setContent('342. No html found in data also... :D ')
             }
           });
-          console.log("361. Content NOT FOUND in first get content " + content);
+          consoleprint(debug, "361. Content NOT FOUND in first get content " + content);
         });
       }
 
@@ -164,22 +178,22 @@
         //TODO: If data is empty object, {} - then skip it.
         //document.getElementById('editing').value = data.mjml;
         myCodeMirror.setValue(data.mjml);
-        console.log('MK Debug - does this have API details - Get Data : ' + JSON.stringify(data));
+        consoleprint(debug, 'MK Debug - does this have API details - Get Data : ' + JSON.stringify(data));
       }
 
-      console.log("Retreiving uname & pwd")
+      consoleprint(debug, "Retreiving uname & pwd")
       if (data['username'] && data['password']) {
         username = data['username']
         password = data['password']
       } else {
         document.getElementById('errorMsg').innerHTML = "Please enter/ save API details";
-        console.log("Please enter/ save API details");
+        consoleprint(debug, "Please enter/ save API details");
         throw 'API details unavailable';
       }
     });
 
     sdk.getUserData(function (userData) {
-      console.log('Get User Data : ' + JSON.stringify(userData));
+      consoleprint(debug, 'Get User Data : ' + JSON.stringify(userData));
     });
 
     function mjmlHelloWorld() {
@@ -201,7 +215,7 @@
       sdk.getContent(function (data) {
         data['mjml'] = helloWorldmjml;
         sdk.setContent('401. Preview not available. Please click on render to generate HTML preview.'); //Always set only html in setcontent //MKTODO : try set content instead supercontent 
-        console.log("401. Content data in render function " + data);
+        consoleprint(debug, "401. Content data in render function " + data);
       });
       sdk.getData(function (data) {
         data['mjml'] = helloWorldmjml;
@@ -306,7 +320,7 @@
       sdk.getContent(function (data) {
         data['mjml'] = mjmlStarWars
         sdk.setContent('507. Preview not available. Please click on render to generate HTML preview.'); //Always set only html in setcontent //MKTODO : try set content instead supercontent 
-        console.log("508. Content data in render function " + data);
+        consoleprint(debug, "508. Content data in render function " + data);
       });
       sdk.getData(function (data) {
         data['mjml'] = mjmlStarWars;
@@ -335,12 +349,12 @@
       var authToken = "Basic " + btoa(username + ":" + password);
       var headers = { "Authorization": authToken }
 
-      console.log("Make post call to \n " + url)
-      /* console.log("payload MJML \n " + payload["mjml"])
-      console.log("username \n " + username)
-      console.log("password \n " + password)
-      console.log("authToken \n " + authToken)
-      console.log("headers \n " + headers) */
+      consoleprint(debug, "Make post call to \n " + url)
+      /* consoleprint(debug, "payload MJML \n " + payload["mjml"])
+      consoleprint(debug, "username \n " + username)
+      consoleprint(debug, "password \n " + password)
+      consoleprint(debug, "authToken \n " + authToken)
+      consoleprint(debug, "headers \n " + headers) */
       axios({
         method: 'post',
         url: url,
@@ -348,41 +362,41 @@
         headers: headers
       })
         .then(result => {
-          console.log(result) //To see full result 
+          consoleprint(debug, result) //To see full result 
           if (result.status == 200) {
-            console.log("HTML received")
-            //console.log(result.data.html)
+            consoleprint(debug, "HTML received")
+            //consoleprint(debug, result.data.html)
             mjmlRenderedContent = result.data.html;
-            console.log("HTML content to be rendered " + result.data.html);
+            consoleprint(debug, "HTML content to be rendered " + result.data.html);
             /*sdk.setSuperContent(result.data.html, function(data) {
-              console.log("Content stored in super content = " + JSON.stringify(data));
+              consoleprint(debug, "Content stored in super content = " + JSON.stringify(data));
             });*/
             sdk.getContent(function (content) {
               sdk.setContent(result.data.html); //Always set only html in setcontent //MKTODO : try set content instead supercontent 
-              console.log("554. Content in render function " + result.data.html);
+              consoleprint(debug, "554. Content in render function " + result.data.html);
             });
 
             sdk.getData(function (data) {
               data['mjml'] = textAreaContent;
               data['html'] = mjmlRenderedContent;
               sdk.setData(data);
-              console.log("568 . content in render function for getdata " + data);
+              consoleprint(debug, "568 . content in render function for getdata " + data);
             });
             //return result.data.html
             //Handle if MJML repsonse had any errors.
             if (result.data.errors.length > 0) {
               var errs = result.data.errors;
 
-              errMsg = errs[0].formattedMessage + "\n"; //To avoid 'undefined' from appended
+              errMsg = errs[0].line + "\t" + errs[0].message + "\n"; //To avoid 'undefined' from appended
               for (var e=1; e<errs.length; e++) {
-                errMsg += errs[e].formattedMessage + "\n";
-                console.log(errs[e]);
+                errMsg += errs[e].line + "\t" + errs[e].message + "\n";
+                consoleprint(debug, errs[e]);
               }
               document.getElementById('errorMsg').innerText = errMsg;
             }
           } else {
-            console.log("HTML Not received");
-            console.log(result.data.errors)
+            consoleprint(debug, "HTML Not received");
+            consoleprint(debug, result.data.errors)
 
             sdk.getData(function (data) {
               if (data['html']) {
@@ -395,10 +409,10 @@
           }
         })
         .catch(result => {
-          console.log("Error rendering");
-          console.log(result.message);
-          console.log(JSON.stringify(result));
-          console.log(result);
+          consoleprint(debug, "Error rendering");
+          consoleprint(debug, result.message);
+          consoleprint(debug, JSON.stringify(result));
+          consoleprint(debug, result);
           document.getElementById('errorMsg').innerText = result.message;
 
         })
@@ -439,6 +453,9 @@
       for (var i in obj) return false;
       return true;
     }    
+    function consoleprint(debug, msg) {
+      (debug ? console.log(msg) : '' ) 
+    } 
   </script>
 </body>
 
