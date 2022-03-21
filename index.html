@@ -1,219 +1,254 @@
 <html>
-
-<head>
-  <link rel="preconnect" href="https://fonts.gstatic.com">
-  <link href="https://fonts.googleapis.com/css2?family=Fira+Code&display=swap" rel="stylesheet">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <script src="CodeMirror/codemirror.js"></script>
-  <link rel="stylesheet" href="CodeMirror/codemirror.css">
-  <script src="CodeMirror/mode/javascript/javascript.js"></script>
-  <script src="CodeMirror/mode/htmlmixed/htmlmixed.js"></script>
-  <script type="text/javascript" 
-        src="CodeMirror/mode/xml/xml.js"></script>
-  <style>
-    .btn {
-      background: #0070d2;
-      color: #fff;
-      box-shadow: none;
-      outline: None;
-      display: inline-block;
-      margin-bottom: 0;
-      font-weight: regular;
-      text-align: center;
-      vertical-align: middle;
-      line-height: 1;
-      cursor: pointer;
-      background-image: none;
-      box-shadow: none;
-      white-space: nowrap;
-      border: 0;
-      padding: 5px 10px;
-      font-size: 11px;
-      border-radius: 3px;
-    }
-    .alert {
-      background-color: 10px;
-      font-size: 12px;
-      border-radius: .25rem;
-      padding: 6px 21px 6px 34px;
-      min-width: rem(480px);
-      position: relative;
-      font-weight: 300;
-      border: none;
-      color: #a94442;
-      box-sizing: border-box;
-      display: none;
-    }
-    .alertmessage {
-      border-top-left-radius: 0;
-      border-top-right-radius: 0;
-      font-size: 12px;
-      display: inline-block;
-      text-align: left;
-      word-break: break-word;
-      font-family: Arial;
-      box-sizing: border-box;
-      color: #FFF;
-      background-color: #c23934;
-      border:1px solid #999999;
-      padding: 5px;
-    }
-    textarea
-    {
-      width:100%;
-    }
-    .textwrapper
-    {
-      border:1px solid #999999;
-      margin:5px 0;
-      padding:3px;
-    }
-
-  </style>
-
-</head>
-
-<body>
-  <div style="width: 100%; height: 80%">
-    <div class="textwrapper">
-      <textarea style="width: 100%; height: 80%" placeholder="Enter MJML Source Code" id="editing" spellcheck="true"></textarea>
-    </div>
-    <div style="padding-top: 25px; bottom: 25px">
-      <div class="alert" id="alertBox"> 
-        <div style="width: 100%;" class="alertmessage">
-          <span class="close" style="float:right; position: relative; top: 3px; right: 3px;">&times;</span>
-            <div style="top:10px" id="errorMsg"></div>
-        </div> 
-      </div>
-      <div>
-        <input class="btn" type="button" value="Render" id="renderBtn" />
-        <input class="btn" type="button" value="Starwars Template" style="float:right; margin:5px ;" id="starwarsMjml" onclick="mjmlStarWarsTemplate()" />
-        <input class="btn" type="button" value="MJML Hello world" style="float:right; margin:5px ;" id="demoMjml" onclick="mjmlHelloWorld()" /> 
-      </div>
-    </div>
-  </div>
-  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-  <script src="blocksdk.js"></script>
-  <script>
-    /* Code mirror script */ 
-    var elt = document.getElementById('editing');
-    var myCodeMirror = CodeMirror.fromTextArea(elt, {
-      lineNumbers: true,
-      mode: "xml",
-      htmlMode: true, 
-      lineSeparator: null,
-      theme: "default",
-      indentUnit: 2,
-      tabSize: 4,
-      indentWithTabs: true,
-      lineWrapping: true, 
-      tabindex: 1,
-      autofocus: true,
-      gutter: true,
-      lineWrapping: true,
-      autoRefresh:true
-    });
-    myCodeMirror.setSize("100%", "100%");
-    myCodeMirror.refresh();
-  </script>
-  <script>
-
-    var textAreaContent;
-    var errMsg;
-    var debug=true;
-
-    const debounce = (fn, delay) => {
-      let timeOutID;
-      return function (...args) {
-        if (timeOutID) {
-          clearTimeout(timeOutID);
-        }
-        timeOutID = setTimeout(() => {
-          fn(...args);
-        }, delay);
-      };
-    };
-
-    var sdk = new window.sfdc.BlockSDK({
-      blockEditorWidth: 500,
-      tabs: [{
-        name: 'Code Snippets',
-        key: 'codeSnippets',
-        url: 'https://test-contentsdk.herokuapp.com/MjmlCodeSnippets.html'
+  <head>
+    <link rel="preconnect" href="https://fonts.gstatic.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fira+Code&display=swap"
+      rel="stylesheet"
+    />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <script src="CodeMirror/codemirror.js"></script>
+    <link rel="stylesheet" href="CodeMirror/codemirror.css" />
+    <script src="CodeMirror/mode/javascript/javascript.js"></script>
+    <script src="CodeMirror/mode/htmlmixed/htmlmixed.js"></script>
+    <script type="text/javascript" src="CodeMirror/mode/xml/xml.js"></script>
+    <style>
+      .btn {
+        background: #0070d2;
+        color: #fff;
+        box-shadow: none;
+        outline: None;
+        display: inline-block;
+        margin-bottom: 0;
+        font-weight: regular;
+        text-align: center;
+        vertical-align: middle;
+        line-height: 1;
+        cursor: pointer;
+        background-image: none;
+        box-shadow: none;
+        white-space: nowrap;
+        border: 0;
+        padding: 5px 10px;
+        font-size: 11px;
+        border-radius: 3px;
       }
-       /* , {
+      .alert {
+        background-color: 10px;
+        font-size: 12px;
+        border-radius: 0.25rem;
+        padding: 6px 5px 6px 5px;
+        min-width: rem(480px);
+        position: relative;
+        font-weight: 300;
+        border: none;
+        color: #a94442;
+        box-sizing: border-box;
+        display: none;
+      }
+      .alertmessage {
+        border-top-left-radius: 0;
+        border-top-right-radius: 0;
+        font-size: 12px;
+        display: inline-block;
+        text-align: left;
+        word-break: break-word;
+        font-family: Arial;
+        box-sizing: border-box;
+        color: #fff;
+        background-color: #c23934;
+        border: 1px solid #999999;
+        padding: 5px;
+      }
+      textarea {
+        width: 100%;
+      }
+      .textwrapper {
+        border: 1px solid #999999;
+        margin: 5px 0;
+        padding: 3px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div style="width: 100%; height: 80%">
+      <div class="textwrapper">
+        <textarea
+          style="width: 100%; height: 80%"
+          placeholder="Enter MJML Source Code"
+          id="editing"
+          spellcheck="true"
+        ></textarea>
+      </div>
+      <div style="padding-top: 5px">
+        <div class="alert" id="alertBox">
+          <div style="width: 100%" class="alertmessage">
+            <span
+              class="close"
+              style="float: right; position: relative; top: 3px; right: 3px"
+              >&times;</span
+            >
+            <div style="top: 10px" id="errorMsg"></div>
+          </div>
+        </div>
+      </div>
+      <div style="padding-top: 5px">
+        <div>
+          <input class="btn" type="button" value="Render" id="renderBtn" />
+          <input
+            class="btn"
+            type="button"
+            value="Starwars Template"
+            style="float: right; margin: 5px"
+            id="starwarsMjml"
+            onclick="mjmlStarWarsTemplate()"
+          />
+          <input
+            class="btn"
+            type="button"
+            value="MJML Hello world"
+            style="float: right; margin: 5px"
+            id="demoMjml"
+            onclick="mjmlHelloWorld()"
+          />
+        </div>
+      </div>
+    </div>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="blocksdk.js"></script>
+    <script>
+      /* Code mirror script */
+      var elt = document.getElementById("editing");
+      var myCodeMirror = CodeMirror.fromTextArea(elt, {
+        lineNumbers: true,
+        mode: "xml",
+        htmlMode: true,
+        lineSeparator: null,
+        theme: "default",
+        indentUnit: 2,
+        tabSize: 4,
+        indentWithTabs: true,
+        lineWrapping: true,
+        tabindex: 1,
+        autofocus: true,
+        gutter: true,
+        lineWrapping: true,
+        autoRefresh: true,
+      });
+      myCodeMirror.setSize("100%", "100%");
+      myCodeMirror.refresh();
+    </script>
+    <script>
+      var textAreaContent;
+      var errMsg;
+      var debug = true;
+
+      const debounce = (fn, delay) => {
+        let timeOutID;
+        return function (...args) {
+          if (timeOutID) {
+            clearTimeout(timeOutID);
+          }
+          timeOutID = setTimeout(() => {
+            fn(...args);
+          }, delay);
+        };
+      };
+
+      var sdk = new window.sfdc.BlockSDK({
+        blockEditorWidth: 500,
+        tabs: [
+          {
+            name: "Code Snippets",
+            key: "codeSnippets",
+            url: "https://test-contentsdk.herokuapp.com/MjmlCodeSnippets.html",
+          },
+          /* , {
         name: 'API Details',
         key: 'mjmlAPIConfig',
         url: 'https://test-contentsdk.herokuapp.com/mjmlAPIConfig.html'
       }*/
-        , 'htmlblock'
-        , 'stylingblock'],
-    });
+          "htmlblock",
+          "stylingblock",
+        ],
+      });
 
+      /* Reset Everything */
+      document.getElementById("alertBox").style.display = "none";
+      document.getElementById("errorMsg").innerHTML = "";
+      sdk.setBlockEditorWidth(500, function (data) {
+        consoleprint(
+          debug,
+          "109. Block width set to 500. Data received " + data
+        );
+      });
 
+      var username = "ac431a44-da36-4958-8d64-e85eff349881";
+      var password = "d702e374-3670-4d14-9dab-a23dfbe9ed07";
 
-    /* Reset Everything */
-    document.getElementById('alertBox').style.display = 'none';
-    document.getElementById('errorMsg').innerHTML = ''; 
-    sdk.setBlockEditorWidth(500, function (data) {
-      consoleprint(debug, "109. Block width set to 500. Data received " + data);
-    })
-
-    var username = "ac431a44-da36-4958-8d64-e85eff349881"
-    var password = "d702e374-3670-4d14-9dab-a23dfbe9ed07"
-
-    sdk.getContent(function (content) {
-      consoleprint(debug, "354. Content in first get content " + content);
-      if (content) {
-        sdk.setContent(content, function (setContent) {
-          consoleprint(debug, "357. Content Found in first get content " + content);
-        });
-      } else {
-        sdk.setContent('356. No html available to preview', function (setContent) { //if no html found, check if getdata has the value 
-          sdk.getData(function (data) {
-            if (data['html']) {
-              sdk.setContent(data['html'])
-            }
-            else {
-              sdk.setContent('')
-            }
+      sdk.getContent(function (content) {
+        consoleprint(debug, "354. Content in first get content " + content);
+        if (content) {
+          sdk.setContent(content, function (setContent) {
+            consoleprint(
+              debug,
+              "357. Content Found in first get content " + content
+            );
           });
-          consoleprint(debug, "361. Content NOT FOUND in first get content " + content);
-        });
-      }
-
-    });
-
-    sdk.getData(function (data) {
-      if (!isEmptyObject(data) && data['mjml']) {
-        //MJML data 
-        //TODO: If data is empty object, {} - then skip it.
-        //document.getElementById('editing').value = data.mjml;
-        myCodeMirror.setValue(data.mjml);
-        consoleprint(debug, 'does this have API details - Get Data : ' + JSON.stringify(data));
-      }
-
-      consoleprint(debug, "Retreiving uname & pwd")
-      if(!username && !password) {
-        if (data['username'] && data['password']) {
-          username = data['username']
-          password = data['password']
         } else {
-          document.getElementById('alertBox').style.display = "block";
-          document.getElementById('errorMsg').innerHTML = "Please enter/ save API details";
-          consoleprint(debug, "Please enter/ save API details");
-          throw 'API details unavailable';
+          sdk.setContent(
+            "356. No html available to preview",
+            function (setContent) {
+              //if no html found, check if getdata has the value
+              sdk.getData(function (data) {
+                if (data["html"]) {
+                  sdk.setContent(data["html"]);
+                } else {
+                  sdk.setContent("");
+                }
+              });
+              consoleprint(
+                debug,
+                "361. Content NOT FOUND in first get content " + content
+              );
+            }
+          );
         }
-      }
-    });
+      });
 
-    sdk.getUserData(function (userData) {
-      consoleprint(debug, 'Get User Data : ' + JSON.stringify(userData));
-    });
+      sdk.getData(function (data) {
+        if (!isEmptyObject(data) && data["mjml"]) {
+          //MJML data
+          //TODO: If data is empty object, {} - then skip it.
+          //document.getElementById('editing').value = data.mjml;
+          myCodeMirror.setValue(data.mjml);
+          consoleprint(
+            debug,
+            "does this have API details - Get Data : " + JSON.stringify(data)
+          );
+        }
 
-    function mjmlHelloWorld() {
-      var helloWorldmjml =
-        `<mjml>
+        consoleprint(debug, "Retreiving uname & pwd");
+        if (!username && !password) {
+          if (data["username"] && data["password"]) {
+            username = data["username"];
+            password = data["password"];
+          } else {
+            document.getElementById("alertBox").style.display = "block";
+            document.getElementById("errorMsg").innerHTML =
+              "Please enter/ save API details";
+            consoleprint(debug, "Please enter/ save API details");
+            throw "API details unavailable";
+          }
+        }
+      });
+
+      sdk.getUserData(function (userData) {
+        consoleprint(debug, "Get User Data : " + JSON.stringify(userData));
+      });
+
+      function mjmlHelloWorld() {
+        var helloWorldmjml = `<mjml>
 <mj-body>
   <mj-section>
     <mj-column>
@@ -223,25 +258,26 @@
   </mj-section>
 </mj-body>
 </mjml>`;
-      //document.getElementById('editing').value = helloWorldmjml;
-      myCodeMirror.setValue(helloWorldmjml);
+        //document.getElementById('editing').value = helloWorldmjml;
+        myCodeMirror.setValue(helloWorldmjml);
 
-      //sdk.setSuperContent(helloWorldmjml);
-      sdk.getContent(function (data) {
-        data['mjml'] = helloWorldmjml;
-        sdk.setContent('401. Preview not available. Please click on render to generate HTML preview.'); //Always set only html in setcontent 
-        consoleprint(debug, "401. Content data in render function " + data);
-      });
-      sdk.getData(function (data) {
-        data['mjml'] = helloWorldmjml;
-        data['html'] = renderMjml();
-        sdk.setData(data);
-      });
-    }
+        //sdk.setSuperContent(helloWorldmjml);
+        sdk.getContent(function (data) {
+          data["mjml"] = helloWorldmjml;
+          sdk.setContent(
+            "401. Preview not available. Please click on render to generate HTML preview."
+          ); //Always set only html in setcontent
+          consoleprint(debug, "401. Content data in render function " + data);
+        });
+        sdk.getData(function (data) {
+          data["mjml"] = helloWorldmjml;
+          data["html"] = renderMjml();
+          sdk.setData(data);
+        });
+      }
 
-    function mjmlStarWarsTemplate() {
-      var mjmlStarWars =
-        `<mjml>
+      function mjmlStarWarsTemplate() {
+        var mjmlStarWars = `<mjml>
   <mj-head>
     <mj-title>These are the Droids you're looking for</mj-title>
   </mj-head>
@@ -327,160 +363,172 @@
     </mj-section>
   </mj-body>
 </mjml>`;
-      myCodeMirror.setValue(mjmlStarWars);
+        myCodeMirror.setValue(mjmlStarWars);
 
-      //sdk.setSuperContent(mjmlStarWars);
-      sdk.getContent(function (data) {
-        data['mjml'] = mjmlStarWars
-        sdk.setContent('507. Preview not available. Please click on render to generate HTML preview.'); 
-        consoleprint(debug, "508. Content data in render function " + data);
-      });
-      sdk.getData(function (data) {
-        data['mjml'] = mjmlStarWars;
-        data['html'] = renderMjml()
-        sdk.setData(data);
-      });
-    }
-
-    function renderMjml() {
-      document.getElementById('errorMsg').innerHTML = '';
-      document.getElementById('alertBox').style.display = "none";
-
-      var textAreaContent = myCodeMirror.getValue();
-      var mjmlRenderedContent = '';
-
-      sdk.getData(function (data) {
-        data['mjml'] = textAreaContent;
-        sdk.setData(data);
-        sdk.setContent('<div style="font-size:12px;font-family:Arial">Api call in progress. Kindly wait for a preview.</div>'); //Clear the content and set value
-      });
-
-
-      var url = "https://api.mjml.io/v1/render";
-      var payload = {
-        "mjml": textAreaContent
+        //sdk.setSuperContent(mjmlStarWars);
+        sdk.getContent(function (data) {
+          data["mjml"] = mjmlStarWars;
+          sdk.setContent(
+            "507. Preview not available. Please click on render to generate HTML preview."
+          );
+          consoleprint(debug, "508. Content data in render function " + data);
+        });
+        sdk.getData(function (data) {
+          data["mjml"] = mjmlStarWars;
+          data["html"] = renderMjml();
+          sdk.setData(data);
+        });
       }
-      var authToken = "Basic " + btoa(username + ":" + password);
-      var headers = { "Authorization": authToken }
 
-      consoleprint(debug, "Make post call to \n " + url)
-      /* consoleprint(debug, "payload MJML \n " + payload["mjml"])
+      function renderMjml() {
+        document.getElementById("errorMsg").innerHTML = "";
+        document.getElementById("alertBox").style.display = "none";
+
+        var textAreaContent = myCodeMirror.getValue();
+        var mjmlRenderedContent = "";
+
+        sdk.getData(function (data) {
+          data["mjml"] = textAreaContent;
+          sdk.setData(data);
+          sdk.setContent(
+            '<div style="font-size:12px;font-family:Arial">Api call in progress. Kindly wait for a preview.</div>'
+          ); //Clear the content and set value
+        });
+
+        var url = "https://api.mjml.io/v1/render";
+        var payload = {
+          mjml: textAreaContent,
+        };
+        var authToken = "Basic " + btoa(username + ":" + password);
+        var headers = { Authorization: authToken };
+
+        consoleprint(debug, "Make post call to \n " + url);
+        /* consoleprint(debug, "payload MJML \n " + payload["mjml"])
       consoleprint(debug, "username \n " + username)
       consoleprint(debug, "password \n " + password)
       consoleprint(debug, "authToken \n " + authToken)
       consoleprint(debug, "headers \n " + headers) */
-      axios({
-        method: 'post',
-        url: url,
-        data: payload,
-        headers: headers
-      })
-        .then(result => {
-          consoleprint(debug, result) //To see full result 
-          if (result.status == 200) {
-            consoleprint(debug, "HTML received")
-            //consoleprint(debug, result.data.html)
-            mjmlRenderedContent = result.data.html;
-            consoleprint(debug, "HTML content to be rendered " + result.data.html);
-            sdk.getContent(function (content) {
-              sdk.setContent(result.data.html); //Always set only html in setcontent 
-              consoleprint(debug, "554. Content in render function " + result.data.html);
-            });
+        axios({
+          method: "post",
+          url: url,
+          data: payload,
+          headers: headers,
+        })
+          .then((result) => {
+            consoleprint(debug, result); //To see full result
+            if (result.status == 200) {
+              consoleprint(debug, "HTML received");
+              //consoleprint(debug, result.data.html)
+              mjmlRenderedContent = result.data.html;
+              consoleprint(
+                debug,
+                "HTML content to be rendered " + result.data.html
+              );
+              sdk.getContent(function (content) {
+                sdk.setContent(result.data.html); //Always set only html in setcontent
+                consoleprint(
+                  debug,
+                  "554. Content in render function " + result.data.html
+                );
+              });
 
-            sdk.getData(function (data) {
-              data['mjml'] = textAreaContent;
-              data['html'] = mjmlRenderedContent;
-              sdk.setData(data);
-              consoleprint(debug, "568 . content in render function for getdata " + data);
-            });
-            //return result.data.html
-            //Handle if MJML repsonse had any errors.
-            if (result.data.errors.length > 0) {
-              var errs = result.data.errors;
+              sdk.getData(function (data) {
+                data["mjml"] = textAreaContent;
+                data["html"] = mjmlRenderedContent;
+                sdk.setData(data);
+                consoleprint(
+                  debug,
+                  "568 . content in render function for getdata " + data
+                );
+              });
+              //return result.data.html
+              //Handle if MJML repsonse had any errors.
+              if (result.data.errors.length > 0) {
+                var errs = result.data.errors;
 
-              errMsg = "Line #" + errs[0].line + "\t" + errs[0].message + "\n"; //To avoid 'undefined' from appended
-              for (var e=1; e<errs.length; e++) {
-                errMsg += "Line #" + errs[e].line + "\t" + errs[e].message + "\n";
-                consoleprint(debug, errs[e]);
+                errMsg =
+                  "Line #" + errs[0].line + "\t" + errs[0].message + "\n"; //To avoid 'undefined' from appended
+                for (var e = 1; e < errs.length; e++) {
+                  errMsg +=
+                    "Line #" + errs[e].line + "\t" + errs[e].message + "\n";
+                  consoleprint(debug, errs[e]);
+                }
+                document.getElementById("alertBox").style.display = "block";
+                document.getElementById("errorMsg").innerText = errMsg;
               }
-              document.getElementById('alertBox').style.display = "block";
-              document.getElementById('errorMsg').innerText = errMsg;
+            } else {
+              consoleprint(debug, "HTML Not received");
+              consoleprint(debug, result.data.errors);
+
+              sdk.getData(function (data) {
+                if (data["html"]) {
+                  sdk.setContent(data["html"]);
+                } else {
+                  sdk.setContent("589 . HTML not available to show a preview");
+                }
+                sdk.setData(data);
+              });
             }
-          } else {
-            consoleprint(debug, "HTML Not received");
-            consoleprint(debug, result.data.errors)
+          })
+          .catch((result) => {
+            consoleprint(debug, "Error rendering");
+            consoleprint(debug, result.message);
+            consoleprint(debug, JSON.stringify(result));
+            consoleprint(debug, result);
 
-            sdk.getData(function (data) {
-              if (data['html']) {
-                sdk.setContent(data['html']);
-              } else {
-                sdk.setContent('589 . HTML not available to show a preview');
-              }
-              sdk.setData(data);
-            });
-          }
-        })
-        .catch(result => {
-          consoleprint(debug, "Error rendering");
-          consoleprint(debug, result.message);
-          consoleprint(debug, JSON.stringify(result));
-          consoleprint(debug, result);
+            document.getElementById("alertBox").style.visibility = "visible";
+            document.getElementById("errorMsg").innerText = result.message;
+          });
 
-          document.getElementById('alertBox').style.visibility = 'visible'
-          document.getElementById('errorMsg').innerText = result.message;
+        return true;
+      }
+      //Event Listener
+      document
+        .getElementById("renderBtn")
+        .addEventListener("click", function () {
+          renderMjml();
+        });
 
-        })
-
-      return true;
-    }
-    //Event Listener
-    document.getElementById("renderBtn").addEventListener(
-      "click",
-      function () { renderMjml() }
-    );
-
-    document.getElementById("editing").addEventListener(
-      "input",
-      debounce((e) => {
-        /*document.getElementById("div-0").innerHTML =
+      document.getElementById("editing").addEventListener(
+        "input",
+        debounce((e) => {
+          /*document.getElementById("div-0").innerHTML =
           '<font face="verdana">(' +
           document.getElementById("editing").value.length +
           "/4000) " +
           (4000 - document.getElementById("editing").value.length) +
           " characters left." +
           "</font>";*/
-        renderMjml();
-      }, 5000)
-    );
-    /* document.getElementById("div-0").innerHTML =
+          renderMjml();
+        }, 5000)
+      );
+      /* document.getElementById("div-0").innerHTML =
       '<font face="verdana">(' +
       document.getElementById("editing").value.length +
       "/4000) " +
       (4000 - document.getElementById("editing").value.length) +
       " characters left." +
       "</font>"; */
-  </script>
+    </script>
 
+    <script>
+      function isEmptyObject(obj) {
+        for (var i in obj) return false;
+        return true;
+      }
+      function consoleprint(debug, msg) {
+        debug ? console.log(msg) : "";
+      }
 
-  <script>
-    function isEmptyObject(obj) {
-      for (var i in obj) return false;
-      return true;
-    }    
-    function consoleprint(debug, msg) {
-      (debug ? console.log(msg) : '' ) 
-    } 
+      /* close button in error msg */
+      var closebtns = document.getElementsByClassName("close");
+      var i;
 
-    /* close button in error msg */
-    var closebtns = document.getElementsByClassName("close");
-    var i;
-    
-    for (i = 0; i < closebtns.length; i++) {
-      closebtns[i].addEventListener("click", function() {
-        this.parentElement.parentElement.style.display = "none";
-      });
-    }
-  </script>
-</body>
-
+      for (i = 0; i < closebtns.length; i++) {
+        closebtns[i].addEventListener("click", function () {
+          this.parentElement.parentElement.style.display = "none";
+        });
+      }
+    </script>
+  </body>
 </html>
