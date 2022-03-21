@@ -42,9 +42,9 @@
       border: none;
       color: #a94442;
       box-sizing: border-box;
+      display: none;
     }
     .alertmessage {
-      margin: 0 10px;
       border-top-left-radius: 0;
       border-top-right-radius: 0;
       font-size: 12px;
@@ -53,6 +53,10 @@
       word-break: break-word;
       font-family: Arial;
       box-sizing: border-box;
+      color: #FFF;
+      background-color: #c23934;
+      border:1px solid #999999;
+      padding: 5px;
     }
     textarea
     {
@@ -74,12 +78,18 @@
     <div class="textwrapper">
       <textarea style="width: 100%; height: 80%" placeholder="Enter MJML Source Code" id="editing" spellcheck="true"></textarea>
     </div>
-    <div style="padding-top: 25px; bottom: 5px">
-      <div class="alert"  > <div class="alertmessage" id="errorMsg"></div> </div>
-      <input class="btn" type="button" value="Render" id="renderBtn" />
-      <input class="btn" type="button" value="Starwars Template" style="float:right; margin:5px ;" id="starwarsMjml" onclick="mjmlStarWarsTemplate()" />
-      <input class="btn" type="button" value="MJML Hello world" style="float:right; margin:5px ;" id="demoMjml" onclick="mjmlHelloWorld()" /> 
-      
+    <div style="padding-top: 25px; bottom: 25px">
+      <div class="alert" id="alertBox"> 
+        <div style="width: 100%;" class="alertmessage">
+          <span class="close" style="float:right; position: relative; top: 3px; right: 3px;">&times;</span>
+            <div style="top:10px" id="errorMsg"></div>
+        </div> 
+      </div>
+      <div>
+        <input class="btn" type="button" value="Render" id="renderBtn" />
+        <input class="btn" type="button" value="Starwars Template" style="float:right; margin:5px ;" id="starwarsMjml" onclick="mjmlStarWarsTemplate()" />
+        <input class="btn" type="button" value="MJML Hello world" style="float:right; margin:5px ;" id="demoMjml" onclick="mjmlHelloWorld()" /> 
+      </div>
     </div>
   </div>
   <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
@@ -143,6 +153,7 @@
 
 
     /* Reset Everything */
+    document.getElementById('alertBox').style.display = 'none';
     document.getElementById('errorMsg').innerHTML = ''; 
     sdk.setBlockEditorWidth(500, function (data) {
       consoleprint(debug, "109. Block width set to 500. Data received " + data);
@@ -188,6 +199,7 @@
           username = data['username']
           password = data['password']
         } else {
+          document.getElementById('alertBox').style.display = "block";
           document.getElementById('errorMsg').innerHTML = "Please enter/ save API details";
           consoleprint(debug, "Please enter/ save API details");
           throw 'API details unavailable';
@@ -332,6 +344,8 @@
 
     function renderMjml() {
       document.getElementById('errorMsg').innerHTML = '';
+      document.getElementById('alertBox').style.display = "none";
+
       var textAreaContent = myCodeMirror.getValue();
       var mjmlRenderedContent = '';
 
@@ -389,6 +403,7 @@
                 errMsg += "Line #" + errs[e].line + "\t" + errs[e].message + "\n";
                 consoleprint(debug, errs[e]);
               }
+              document.getElementById('alertBox').style.display = "block";
               document.getElementById('errorMsg').innerText = errMsg;
             }
           } else {
@@ -410,6 +425,8 @@
           consoleprint(debug, result.message);
           consoleprint(debug, JSON.stringify(result));
           consoleprint(debug, result);
+
+          document.getElementById('alertBox').style.visibility = 'visible'
           document.getElementById('errorMsg').innerText = result.message;
 
         })
@@ -453,6 +470,16 @@
     function consoleprint(debug, msg) {
       (debug ? console.log(msg) : '' ) 
     } 
+
+    /* close button in error msg */
+    var closebtns = document.getElementsByClassName("close");
+    var i;
+    
+    for (i = 0; i < closebtns.length; i++) {
+      closebtns[i].addEventListener("click", function() {
+        this.parentElement.parentElement.style.display = "none";
+      });
+    }
   </script>
 </body>
 
