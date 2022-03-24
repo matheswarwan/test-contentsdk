@@ -22,6 +22,7 @@
     <script src="CodeMirror/mode/htmlmixed/htmlmixed.js"></script>
     <script type="text/javascript" src="CodeMirror/mode/xml/xml.js"></script>
     <style>
+      .CodeMirror-cursor { display: none !important }
       .copy-code-wrap {
         height: 34px;
         width: 34px;
@@ -122,7 +123,60 @@
             see example) overrides default settings for listed MJML attributes
             on the one component.</p>
         </div>
-        
+        <div>
+          <textarea
+            class="copy-code code-text-area"
+            style="width: 100%; height: 80%"
+            placeholder="Enter MJML Source Code"
+            id="editing"
+            spellcheck="true"
+          ></textarea>
+        </div>
+      </div>
+    </div>
+    <br>
+    <div>  
+      <div class="contentsection">
+        <div class="contentsettings-section-header">mj-accordion</div>
+        <div class="styling-subsection-title">
+          <p><code>mj-accordion</code> is an interactive MJML component to stack content in tabs, so the information is collapsed and only the titles are visible. Readers can interact by clicking on the tabs to reveal the content, providing a great experience on mobile devices where space is scarce.</p>
+        </div>
+        <div>
+          <textarea
+            class="copy-code code-text-area"
+            style="width: 100%; height: 80%"
+            placeholder="Enter MJML Source Code"
+            id="editing"
+            spellcheck="true"
+          ></textarea>
+        </div>
+      </div>
+    </div>
+    <br>
+    <div>  
+      <div class="contentsection">
+        <div class="contentsettings-section-header">mj-image</div>
+        <div class="styling-subsection-title">
+          <p>Displays a responsive image in your email. It is similar to the HTML <code>&lt;img /&gt;</code> tag. Note that if no width is provided, the image will use the parent column width.</p>
+        </div>
+        <div>
+          <textarea
+            class="copy-code code-text-area"
+            style="width: 100%; height: 80%"
+            placeholder="Enter MJML Source Code"
+            id="editing"
+            spellcheck="true"
+          ></textarea>
+        </div>
+      </div>
+    </div>
+    <br>
+    <div>  
+      <div class="contentsection">
+        <div class="contentsettings-section-header">mj-social</div>
+        <div class="styling-subsection-title">
+          <p>Displays calls-to-action for various social networks with their associated logo. You can add social networks with the <code>mj-social-element</code> tag.</p>
+        </div>
         <div>
           <textarea
             class="copy-code code-text-area"
@@ -167,6 +221,7 @@
       } */
   </script>
   <script>
+    
     /* Code mirror script */
     var myCodeMirror;
     var elt = document.getElementsByClassName("code-text-area");
@@ -189,8 +244,14 @@
         gutter: true,
         lineWrapping: true,
         autoRefresh: true,
-        readOnly: "nocursor",
+        readOnly: "true",
         height: "auto",
+        extraKeys: {
+          "Ctrl-x": function(instance) { 
+            console.log("ctrl s click")
+          },
+      
+        }
       });
       myCodeMirror.setSize(null, "100%");
       myCodeMirror.refresh();
@@ -203,7 +264,15 @@
       setValueInCodeEditor(mjmlText[i]);
     }
 
-
+    //hide contents by default
+    var el = document.getElementsByClassName("styling-subsection-title");
+    for (var i=0;i<el.length;i++) {
+      el[i].style.display = 'none';
+    }
+    var el = document.getElementsByClassName("CodeMirror");
+    for (var i=0;i<el.length;i++) {
+      el[i].style.display = 'none';
+    }
     /*function setMJMLText() { 
       console.log('on load');
       var elt = document.getElementsByClassName("code-text-area");
@@ -252,7 +321,7 @@
       el.getElementsByClassName("styling-subsection-title")[0].style.display =
         el.getElementsByClassName("styling-subsection-title")[0].style.display ==
         "none"
-          ? "inline"
+          ? "inline-block"
           : "none";
           /* el.getElementsByClassName("code-text-area")[0].style.display =
           el.getElementsByClassName("code-text-area")[0].style.display ==
@@ -262,7 +331,7 @@
           el.getElementsByClassName("CodeMirror-wrap")[0].style.display =
           el.getElementsByClassName("CodeMirror-wrap")[0].style.display ==
           "none"
-            ? "inline"
+            ? "inline-block"
             : "none";            
     }
   </script>
