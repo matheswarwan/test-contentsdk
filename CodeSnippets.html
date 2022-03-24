@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Playground</title>
+    <!-- <link
+      rel="stylesheet"
+      type="text/css"
+      href="./slds/css/salesforce-lightning-design-system.css"
+    /> -->
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="./slds/css/service_contentbuilder.css"
+    />
+    <script src="CodeMirror/codemirror.js"></script>
+    <script src="mjmldoc.js"></script>
+    <link rel="stylesheet" href="CodeMirror/codemirror.css" />
+    <script src="CodeMirror/mode/javascript/javascript.js"></script>
+    <script src="CodeMirror/mode/htmlmixed/htmlmixed.js"></script>
+    <script type="text/javascript" src="CodeMirror/mode/xml/xml.js"></script>
+    <style>
+      .copy-code-wrap {
+        height: 34px;
+        width: 34px;
+        position: absolute;
+        bottom: -10px;
+        right: -10px;
+        z-index: 10;
+        cursor: pointer;
+      }
+      .copy-code {
+        position: absolute;
+        right: 0;
+        top: 0;
+        background: #e0e0e0;
+        transition: 0.2s;
+        background-image: url("./img/copyIcon.png");
+        background-repeat: no-repeat;
+        height: 16px;
+        width: 16px;
+        display: inline-block;
+        background-position: -48px 0;
+      }
+      .copy-code::after {
+        font-family: "Font Awesome 5 Free";
+        font-weight: 600;
+        font-size: 16px;
+        content: "\f328";
+        color: #fff;
+        position: absolute;
+        top: 3px;
+        left: 10px;
+      }
+      .copy-code-wrap:active .copy-code {
+        transform: translate(0, 0) scale(0.9);
+      }
+      .animate {
+        transform: translate(0, 0) scale(1.12);
+      }
+
+      .tooltip {
+        font-size: 15px;
+        box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+      }
+      .styling-subsection-title {
+        word-wrap: break-word;
+        overflow-wrap: break-word;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="copy-code-wrap">
+      <div class="copy-code"></div>
+    </div>
+    <div class="contentparent" id="contentparent">  
+      <div class="contentsection">
+        <div class="contentsettings-section-header">mj-body</div>
+        <div class="styling-subsection-title">
+        This is the starting point of your email.
+        </div>
+        
+        <div>
+          <textarea
+            class="copy-code code-text-area"
+            style="width: 100%; height: 80%"
+            placeholder="Enter MJML Source Code"
+            id="editing"
+            spellcheck="true"
+          ></textarea>
+        </div>
+      </div>
+    </div>
+    <br>
+    <div>  
+      <div class="contentsection">
+        <div class="contentsettings-section-header">mj-include</div>
+        <div class="styling-subsection-title">
+          The <code>mjml-core</code> package allows you to include external mjml files to build your email template.
+        </div>
+        <div>
+          <textarea
+            class="copy-code code-text-area"
+            style="width: 100%; height: 80%"
+            placeholder="Enter MJML Source Code"
+            id="editing"
+            spellcheck="true"
+          ></textarea>
+        </div>
+      </div>
+    </div>
+    <br>
+    <div>  
+      <div class="contentsection">
+        <div class="contentsettings-section-header">mj-attribute</div>
+        <div class="styling-subsection-title">
+          <p>Inside <code>mj-attributes</code>, a tag citing one MJML component (like <code>mj-text</code>;
+            see example) overrides default settings for listed MJML attributes
+            on the one component.</p>
+        </div>
+        
+        <div>
+          <textarea
+            class="copy-code code-text-area"
+            style="width: 100%; height: 80%"
+            placeholder="Enter MJML Source Code"
+            id="editing"
+            spellcheck="true"
+          ></textarea>
+        </div>
+      </div>
+    </div>
+  </body>
+  <script>
+    /* 
+      for(var i=0; i< mjmlTitle.length; i++) {
+        const e = document.createElement('div');
+        e.className = "contentsection";
+        
+          e1 = document.createElement('div')
+          e1.className = "contentsettings-section-header";
+          e1.innerHTML = mjmlTitle[i];
+        
+          e2 = document.createElement('div');
+          e2.className = "styling-subsection-title";
+          e2.innerHTML = '<p>' + mjmlDescription[i] + '</p>';
+
+          e3 = document.createElement('div');
+          
+          e4 = document.createElement('textarea');
+          e4.className = "copy-code code-text-area";
+          e4.id = "editing"
+          e4.spellcheck = "true"
+          //e4.style = "width: 100%; height: 80%";
+          
+          e3.appendChild(e4)
+
+          e.appendChild(e1);
+          e.appendChild(e2);
+          e.appendChild(e3);
+
+        document.getElementById('contentparent').appendChild(e);
+      } */
+  </script>
+  <script>
+    /* Code mirror script */
+    var myCodeMirror;
+    var elt = document.getElementsByClassName("code-text-area");
+    for(var i = 0; i < elt.length; i++){
+      genCodeEditor(elt[i])
+    } 
+    function genCodeEditor(elt) { 
+      myCodeMirror = CodeMirror.fromTextArea(elt, {
+        lineNumbers: true,
+        mode: "xml",
+        htmlMode: true,
+        lineSeparator: null,
+        theme: "default",
+        indentUnit: 2,
+        tabSize: 4,
+        indentWithTabs: true,
+        lineWrapping: true,
+        tabindex: 1,
+        autofocus: true,
+        gutter: true,
+        lineWrapping: true,
+        autoRefresh: true,
+        readOnly: "nocursor",
+        height: "auto",
+      });
+      myCodeMirror.setSize(null, "100%");
+      myCodeMirror.refresh();
+
+      function setValueInCodeEditor(mjmlText) {
+        myCodeMirror.setValue(mjmlText);
+        myCodeMirror.refresh();
+      }
+      
+      setValueInCodeEditor(mjmlText[i]);
+    }
+
+
+    /*function setMJMLText() { 
+      console.log('on load');
+      var elt = document.getElementsByClassName("code-text-area");
+      for(var i = 0; i < elt.length; i++){
+        myCodeMirror.setValue(mjmlText);
+        myCodeMirror.refresh();
+      }
+     } */
+
+    
+  </script>
+  <script>
+    const $ = function (selector, bind) {
+      var bind = bind === undefined ? document : bind;
+      let nodes = bind.querySelectorAll.bind(bind)(selector);
+      return nodes.length == 1 ? nodes[0] : nodes;
+    };
+
+    $(".copy-code-wrap").onclick = function (e) {
+      if (e.which == 1) {
+        // write the text to the clipboard
+        navigator.clipboard.writeText(myCodeMirror.getValue());
+
+        // animate the button
+        var copy = $(".copy-code", this);
+        function quickadd() {
+          copy.classList.add("animate");
+          setTimeout(function () {
+            copy.classList.remove("animate");
+          }, 200);
+        }
+        quickadd();
+      }
+    };
+  </script>
+  <script>
+    const divs = document.querySelectorAll('.contentsettings-section-header');
+
+    divs.forEach((el) =>
+      el.addEventListener("click", (event) => {
+        changeAccordion(el.parentElement);
+      })
+    );
+    function changeAccordion(el) {
+      //Toggling content
+      el.getElementsByClassName("styling-subsection-title")[0].style.display =
+        el.getElementsByClassName("styling-subsection-title")[0].style.display ==
+        "none"
+          ? "inline"
+          : "none";
+          /* el.getElementsByClassName("code-text-area")[0].style.display =
+          el.getElementsByClassName("code-text-area")[0].style.display ==
+          "none"
+            ? "inline"
+            : "none"; */
+          el.getElementsByClassName("CodeMirror-wrap")[0].style.display =
+          el.getElementsByClassName("CodeMirror-wrap")[0].style.display ==
+          "none"
+            ? "inline"
+            : "none";            
+    }
+  </script>
+</html>
