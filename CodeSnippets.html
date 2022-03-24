@@ -323,16 +323,17 @@
         "none"
           ? "inline-block"
           : "none";
-          /* el.getElementsByClassName("code-text-area")[0].style.display =
-          el.getElementsByClassName("code-text-area")[0].style.display ==
-          "none"
-            ? "inline"
-            : "none"; */
-          el.getElementsByClassName("CodeMirror-wrap")[0].style.display =
-          el.getElementsByClassName("CodeMirror-wrap")[0].style.display ==
+      /* el.getElementsByClassName("CodeMirror")[0].style.display =
+          el.getElementsByClassName("CodeMirror")[0].style.display ==
           "none"
             ? "inline-block"
-            : "none";            
+            : "none"; */
+      el.getElementsByClassName("CodeMirror-wrap")[0].style.display =
+        el.getElementsByClassName("CodeMirror-wrap")[0].style.display ==
+          "none"
+            ? "inline-block"
+            : "none";      
+      myCodeMirror.refresh();      
     }
   </script>
 </html>
