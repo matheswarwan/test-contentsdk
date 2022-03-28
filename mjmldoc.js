@@ -3,6 +3,7 @@ mjmlTitle = [
     'mj-include',
     'mj-attribute',
     'mj-accordian',
+    'mj-button',
     'mj-image',
     'mj-social'
 ]
@@ -12,6 +13,7 @@ mjmlDescription = [
     ,`The <code>mjml-core</code> package allows you to include external mjml files to build your email template.`
     ,`Inside <code>mj-attributes</code>, a tag citing one MJML component (like <code>mj-text</code>; see example) overrides default settings for listed MJML attributes on the one component.`
     ,`<code>mj-accordion</code> is an interactive MJML component to stack content in tabs, so the information is collapsed and only the titles are visible. Readers can interact by clicking on the tabs to reveal the content, providing a great experience on mobile devices where space is scarce.`
+    ,`Displays a customizable button.<br> The <code>mj-button</code> won't be fully clickable because of client support. See discussion at <a href="https://github.com/mjmlio/mjml/issues/359" target="_blank">Issue #359</a>. `
     ,`Displays a responsive image in your email. It is similar to the HTML <code>&lt;img /&gt;</code> tag. Note that if no width is provided, the image will use the parent column width.`
     ,'Displays calls-to-action for various social networks with their associated logo. You can add social networks with the <code>mj-social-element</code> tag.'
 ]
@@ -28,7 +30,21 @@ mjmlText =
     <mj-column>
         <mj-text>This is a header</mj-text>
     </mj-column>
-</mj-section>`
+</mj-section>
+
+<!-- main.mjml -->
+<mjml>
+  <mj-body>
+    <mj-include path="./header.mjml" />
+  </mj-body>
+</mjml>
+
+<!-- main.mjml -->
+  <mj-include path="./styles.css" type="css" />
+  <mj-include path="./inline-styles.css" type="css" css-inline="inline" />
+  
+<!-- main.mjml -->
+  <mj-include path="./partial.html" type="html" />`
 ,
 `<mjml>
     <mj-head>
@@ -90,8 +106,113 @@ mjmlText =
 <mj-body>
   <mj-section>
     <mj-column>
+      <mj-button font-family="Helvetica" background-color="#f45e43" color="white">
+        Don't click me!
+       </mj-button>
+    </mj-column>
+  </mj-section>
+</mj-body>
+</mjml>`
+,`<mjml>
+<mj-body>
+  <mj-section>
+    <mj-column>
+      <mj-carousel>
+        <mj-carousel-image src="https://www.mailjet.com/wp-content/uploads/2016/11/ecommerce-guide.jpg" />
+        <mj-carousel-image src="https://www.mailjet.com/wp-content/uploads/2016/09/3@1x.png" />
+        <mj-carousel-image src="https://www.mailjet.com/wp-content/uploads/2016/09/1@1x.png" />
+      </mj-carousel>
+    </mj-column>
+  </mj-section>
+</mj-body>
+</mjml>`
+,`<mjml>
+<mj-body>
+  <mj-section>
+    <mj-column>
+      <!-- Your first column -->
+    </mj-column>
+    <mj-column>
+      <!-- Your second column -->
+    </mj-column>
+  </mj-section>
+</mj-body>
+</mjml>`
+,`<mjml>
+<mj-body>
+  <mj-section>
+    <mj-column>
+      <mj-divider border-width="1px" border-style="dashed" border-color="lightgrey" />
+    </mj-column>
+  </mj-section>
+</mj-body>
+</mjml>`
+,`<mjml>
+<mj-body>
+  <mj-hero
+    mode="fixed-height"
+    height="469px"
+    background-width="600px"
+    background-height="469px"
+    background-url=
+        "https://cloud.githubusercontent.com/assets/1830348/15354890/1442159a-1cf0-11e6-92b1-b861dadf1750.jpg"
+    background-color="#2a3448"
+    padding="100px 0px">
+    <mj-text
+      padding="20px"
+      color="#ffffff"
+      font-family="Helvetica"
+      align="center"
+      font-size="45px"
+      line-height="45px"
+      font-weight="900">
+      GO TO SPACE
+    </mj-text>
+    <mj-button href="https://mjml.io/" align="center">
+      ORDER YOUR TICKET NOW
+    </mj-button>
+  </mj-hero>
+</mj-body>
+</mjml>`
+,`<mjml>
+<mj-body>
+  <mj-section>
+    <mj-column>
       <mj-image width="300px" src="https://www.online-image-editor.com//styles/2014/images/example_image.png" />
     </mj-column>
+  </mj-section>
+</mj-body>
+</mjml>`
+,`<mjml>
+<mj-body>
+  <mj-raw>
+    <!-- Your content goes here -->
+  </mj-raw>
+</mj-body>
+</mjml>
+
+<mjml>
+  <mj-body>
+    <mj-raw>
+      <!-- htmlmin:ignore -->{% if foo < 5 %}<!-- htmlmin:ignore -->
+    </mj-raw>
+      <!-- Some mjml section -->
+    <mj-raw>
+      {% endif %}
+    </mj-raw>
+  </mj-body>
+</mjml>
+
+<mjml>
+  <mj-raw position="file-start">This will be added at the beginning of the file</mj-raw>
+  <mj-body>
+    <!-- Your content goes here -->
+  </mj-body>
+</mjml>`
+,`<mjml>
+<mj-body>
+  <mj-section full-width="full-width" background-color="red">
+    <!-- Your columns go here -->
   </mj-section>
 </mj-body>
 </mjml>`
@@ -113,6 +234,73 @@ mjmlText =
       </mj-social>
     </mj-column>
   </mj-section>
+</mj-body>
+</mjml>`
+,`<mjml>
+<mj-body>
+  <mj-section>
+    <mj-column>
+      <mj-text>A first line of text</mj-text>
+      <mj-spacer height="50px" />
+      <mj-text>A second line of text</mj-text>
+    </mj-column>
+  </mj-section>
+</mj-body>
+</mjml>`
+,`<mjml>
+<mj-body>
+  <mj-section>
+    <mj-column>
+      <mj-table>
+        <tr style="border-bottom:1px solid #ecedee;text-align:left;padding:15px 0;">
+          <th style="padding: 0 15px 0 0;">Year</th>
+          <th style="padding: 0 15px;">Language</th>
+          <th style="padding: 0 0 0 15px;">Inspired from</th>
+        </tr>
+        <tr>
+          <td style="padding: 0 15px 0 0;">1995</td>
+          <td style="padding: 0 15px;">PHP</td>
+          <td style="padding: 0 0 0 15px;">C, Shell Unix</td>
+        </tr>
+        <tr>
+          <td style="padding: 0 15px 0 0;">1995</td>
+          <td style="padding: 0 15px;">JavaScript</td>
+          <td style="padding: 0 0 0 15px;">Scheme, Self</td>
+        </tr>
+      </mj-table>
+    </mj-column>
+  </mj-section>
+</mj-body>
+</mjml>`,
+`<mjml>
+<mj-body>
+  <mj-section>
+    <mj-column>
+      <mj-text>
+        <h1>
+          Hey Title!
+        </h1>
+      </mj-text>
+    </mj-column>
+  </mj-section>
+</mj-body>
+</mjml>`,
+`<mjml>
+<mj-body>
+  <mj-wrapper border="1px solid #000000" padding="50px 30px">
+    <mj-section border-top="1px solid #aaaaaa" border-left="1px solid #aaaaaa" border-right="1px solid #aaaaaa" padding="20px">
+      <mj-column>
+        <mj-image padding="0" src="https://placeholdit.imgix.net/~text?&w=350&h=150" />
+      </mj-column>
+    </mj-section>
+    <mj-section border-left="1px solid #aaaaaa" border-right="1px solid #aaaaaa" padding="20px" border-bottom="1px solid #aaaaaa">
+      <mj-column border="1px solid #dddddd">
+        <mj-text padding="20px"> First line of text </mj-text>
+        <mj-divider border-width="1px" border-style="dashed" border-color="lightgrey" padding="0 20px" />
+        <mj-text padding="20px"> Second line of text </mj-text>
+      </mj-column>
+    </mj-section>
+  </mj-wrapper>
 </mj-body>
 </mjml>`
 ];
