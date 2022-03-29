@@ -456,7 +456,25 @@
                 document.getElementById("alertBox").style.display = "block";
                 document.getElementById("errorMsg").innerText = errMsg;
               }
-            } else {
+            } else if (result.status == 400) {
+              consoleprint(debug, "Received 400");
+              consoleprint(debug, result.data);
+
+              sdk.getData(function (data) {
+                if (data["html"]) {
+                  sdk.setContent(data["html"]);
+                } else {
+                  sdk.setContent("589 . HTML not available to show a preview");
+                }
+                sdk.setData(data);
+              });
+              //Display Error - {"message":"[MJMLError]: Something went wrong","request_id":"115e1295-c3cb-4c93-aa30-53f99300c987","started_at":"2022-03-29T18:42:06Z"}
+              errMsg = result.data.message;
+              document.getElementById("alertBox").style.display = "block";
+              document.getElementById("errorMsg").innerText = errMsg;
+
+            }
+            else {
               consoleprint(debug, "HTML Not received");
               consoleprint(debug, result.data.errors);
 
