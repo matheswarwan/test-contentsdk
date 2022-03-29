@@ -494,8 +494,9 @@
             consoleprint(debug, JSON.stringify(result));
             consoleprint(debug, result);
 
+            //Specific scenario where mj-include not supported
             errMsg = result.message;
-            errMsg += (result.data.indexOf('mj-include') > -1 ? 'Please note that mj-include is not supported in API calls.' : '');
+            errMsg += (textAreaContent.indexOf('mj-include') > -1 ? 'Please note that mj-include is not supported in API calls.' : '');
 
             document.getElementById("alertBox").style.display = "block";
             document.getElementById("errorMsg").innerText = result.message;
