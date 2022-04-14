@@ -8,6 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <script src="CodeMirror/codemirror.js"></script>
     <link rel="stylesheet" href="CodeMirror/codemirror.css" />
+    <script src="js/mjml.js"></script>
     <script src="CodeMirror/mode/javascript/javascript.js"></script>
     <script src="CodeMirror/mode/htmlmixed/htmlmixed.js"></script>
     <script type="text/javascript" src="CodeMirror/mode/xml/xml.js"></script>
@@ -380,7 +381,7 @@
         });
       }
 
-      function renderMjml() {
+      function renderMjml () {
         document.getElementById("errorMsg").innerHTML = "";
         document.getElementById("alertBox").style.display = "none";
 
@@ -395,7 +396,40 @@
           ); //Clear the content and set value
         });
 
-        var url = "https://api.mjml.io/v1/render";
+
+        //var mjml2html = require('mjml')
+        //var mjmlModule = require('./index')
+        //let htmlOutput = mjml2html(textAreaContent, {});
+        //console.log(htmlOutput['html'])
+
+
+        // MK123 - This is local rendering
+        console.log("LOCAL RENDERING!!!!")
+        var htmlOutput = mjml(textAreaContent);
+        
+        //document.getElementById('renderedHTML').innerHTML = htmlOutput.html
+        if(htmlOutput.html.length > 0) { 
+          console.log(htmlOutput.html)
+          sdk.getContent(function (content) {
+            sdk.setContent(htmlOutput.html); //Always set only html in setcontent
+            consoleprint(
+              debug,
+              "554. Content in render function " + htmlOutput.html
+            );
+          });
+
+          sdk.getData(function (data) {
+            data["mjml"] = textAreaContent;
+            data["html"] = htmlOutput.html;
+            sdk.setData(data);
+            consoleprint(
+              debug,
+              "568 . content in render function for getdata " + data
+            );
+          });
+        }
+
+/*        var url = "https://api.mjml.io/v1/render";
         var payload = {
           mjml: textAreaContent,
         };
@@ -403,11 +437,6 @@
         var headers = { Authorization: authToken };
 
         consoleprint(debug, "Make post call to \n " + url);
-        /* consoleprint(debug, "payload MJML \n " + payload["mjml"])
-      consoleprint(debug, "username \n " + username)
-      consoleprint(debug, "password \n " + password)
-      consoleprint(debug, "authToken \n " + authToken)
-      consoleprint(debug, "headers \n " + headers) */
         axios({
           method: "post",
           url: url,
@@ -501,6 +530,8 @@
             document.getElementById("alertBox").style.display = "block";
             document.getElementById("errorMsg").innerText = errMsg;
           });
+
+          */ 
 
         return true;
       }
