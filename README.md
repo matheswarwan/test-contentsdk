@@ -1,5 +1,7 @@
 # test-contentsdk: MJML editor block for SFMC Content Builder
 
+> **Archived.** This project continues as [MjmlRender](https://github.com/matheswarwan/MjmlRender), which started from this code in April 2022 and has fixed the render and save issues described below. Use that one: it's live at https://mjmlrender.pages.dev.
+
 A custom content block for Salesforce Marketing Cloud (SFMC) Content Builder. You write [MJML](https://mjml.io) in a code editor inside the block, click **Render**, and the block converts it to email HTML. The rendered HTML becomes the block's content in the email.
 
 ## What it does
